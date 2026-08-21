@@ -1,0 +1,618 @@
+# ---------------------------------------------------------------------------
+# Pages CMS configuration — https://pagescms.org
+#
+# This file defines the editing screens that GSSA officers see at
+# app.pagescms.org. Every label and description below is written for someone
+# who has never used a CMS. If you add a field to a template, add it here too,
+# or officers will not be able to edit it.
+# ---------------------------------------------------------------------------
+
+media:
+  input: src/media
+  output: /media
+  categories: [image, document]
+
+content:
+  # -------------------------------------------------------------------------
+  # NEWS — the dated list on the home page
+  # -------------------------------------------------------------------------
+  - name: news
+    label: News
+    description: >-
+      Announcements. The ten newest appear on the home page; every one of them
+      is listed on the News page.
+    type: collection
+    path: src/content/news
+    filename: "{year}-{month}-{day}-{primary}.md"
+    view:
+      fields: [title, date]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Headline
+        type: string
+        required: true
+        description: Keep it short — one line reads best.
+      - name: date
+        label: Date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+        description: Controls where this appears in the list.
+      - name: body
+        label: Announcement
+        type: rich-text
+        description: Write it like an email. Bold, links and lists all work.
+      - name: image
+        label: Photo (optional)
+        type: image
+        description: Shown under the text. Landscape photos look best.
+      - name: imageAlt
+        label: Photo description (optional)
+        type: string
+        description: >-
+          A short description of the photo for people using screen readers.
+      - name: links
+        label: Links (optional)
+        type: object
+        list: true
+        description: Appear as [Label] under the announcement.
+        fields:
+          - name: label
+            label: Link text
+            type: string
+          - name: url
+            label: Web address
+            type: string
+
+  # -------------------------------------------------------------------------
+  # BOARD — officer cards, and the automatic past-board archive
+  # -------------------------------------------------------------------------
+  - name: board
+    label: Board Members
+    description: >-
+      Officer cards. To roll over to a new board, add entries with the new term
+      and update "Current term" in Site Settings. Never delete past officers —
+      they become the public archive.
+    type: collection
+    path: src/content/board
+    filename: "{primary}.md"
+    view:
+      fields: [name, role, term]
+      primary: name
+      sort: [order, name, term]
+      default:
+        sort: order
+        order: asc
+    fields:
+      - name: name
+        label: Full name
+        type: string
+        description: Leave blank to show "To be announced".
+      - name: role
+        label: Position
+        type: select
+        required: true
+        options:
+          values:
+            - President
+            - Secretary
+            - Vice President of Finance
+            - Vice President of Communications
+            - Faculty Advisor
+      - name: term
+        label: Term
+        type: string
+        required: true
+        default: "2026-2027"
+        pattern:
+          regex: "^[0-9]{4}-[0-9]{4}$"
+          message: Use the form 2026-2027.
+        description: >-
+          Must match "Current term" in Site Settings to appear as a current
+          officer. Anything else moves to Past Boards.
+      - name: pronunciation
+        label: How to say the name (optional)
+        type: string
+        description: 'For example: AA-shoo-tosh puh-WAAR'
+      - name: program
+        label: Program or title
+        type: string
+        description: 'For example: Ph.D. Student, Geoinformatics'
+      - name: bio
+        label: Short bio
+        type: rich-text
+        description: Two or three sentences. Research interests plus something human.
+      - name: photo
+        label: Photo
+        type: image
+        description: >-
+          Optional. Any shape works — the photo is centre-cropped into a circle
+          automatically, so there is no need to crop it first. Until one is
+          added, a neutral "no photo" circle is shown instead.
+      - name: email
+        label: Email
+        type: string
+        description: >-
+          Prefer a GSSA role address over a personal one, so it keeps working
+          after the term ends.
+      - name: officeHours
+        label: Office hours
+        type: string
+        default: By appointment
+      - name: order
+        label: Display order
+        type: number
+        default: 1
+        description: 1 appears first. President 1, Secretary 2, and so on.
+      - name: isAdvisor
+        label: This is the Faculty Advisor
+        type: boolean
+        default: false
+        description: >-
+          Shown separately from the elected officers, since the advisor does not
+          vote.
+
+  # -------------------------------------------------------------------------
+  # AWARDS — every field here is required by the bylaws before applications open
+  # -------------------------------------------------------------------------
+  - name: awards
+    label: Funding Opportunities
+    description: >-
+      Vouchers, travel assistance and awards. Bylaws Art. VIII 8.13 requires
+      eligibility, quantity, method, deadline, timeline and criteria to be
+      published BEFORE applications open. Blank fields show publicly as
+      "To be published".
+    type: collection
+    path: src/content/awards
+    filename: "{primary}.md"
+    view:
+      fields: [title, status, deadline]
+      primary: title
+    fields:
+      - name: title
+        label: Name of the opportunity
+        type: string
+        required: true
+      - name: status
+        label: Status
+        type: select
+        required: true
+        default: upcoming
+        options:
+          values:
+            - { label: "Open — accepting applications", value: open }
+            - { label: "Coming soon", value: upcoming }
+            - { label: "Closed", value: closed }
+      - name: body
+        label: Description
+        type: rich-text
+        description: What the opportunity is and why it is worth applying for.
+      - name: eligibility
+        label: Who is eligible
+        type: text
+      - name: quantity
+        label: How many are available
+        type: text
+        description: 'For example: 5 student vouchers'
+      - name: applicationMethod
+        label: How to apply
+        type: text
+      - name: deadline
+        label: Application deadline
+        type: text
+        description: 'Write it plainly: September 2, 2026 at 11:59 p.m.'
+      - name: decisionTimeline
+        label: When decisions are announced
+        type: text
+      - name: selectionCriteria
+        label: How recipients are selected
+        type: text
+        description: >-
+          Include any scoring method. Reviewers must be non-applicants, and at
+          least three of them.
+      - name: applyUrl
+        label: Application link (optional)
+        type: string
+        description: Shows an "Apply now" button when the status is Open.
+      - name: order
+        label: Display order
+        type: number
+        default: 1
+
+  # -------------------------------------------------------------------------
+  # RECIPIENTS
+  # -------------------------------------------------------------------------
+  - name: recipients
+    label: Award Recipients
+    description: >-
+      Students who received a GSSA opportunity. Ask permission before posting
+      anyone's name or photo.
+    type: collection
+    path: src/content/recipients
+    filename: "{primary}.md"
+    view:
+      fields: [name, award, term]
+      primary: name
+    fields:
+      - name: name
+        label: Student name
+        type: string
+        required: true
+      - name: award
+        label: Which award
+        type: string
+        required: true
+      - name: term
+        label: Term or year
+        type: string
+        description: 'For example: Fall 2026'
+      - name: photo
+        label: Photo
+        type: image
+        description: >-
+          Optional. Centre-cropped into a circle automatically.
+      - name: note
+        label: Short note
+        type: text
+        description: One or two sentences about the student or their work.
+      - name: date
+        label: Date awarded
+        type: date
+        options:
+          format: yyyy-MM-dd
+
+  # -------------------------------------------------------------------------
+  # PAGE TEXT — the wording of each page
+  # -------------------------------------------------------------------------
+  - name: settings
+    label: Site Settings
+    description: Applies to every page.
+    type: file
+    path: src/_data/site.json
+    fields:
+      - name: orgName
+        label: Organization name
+        type: string
+      - name: shortName
+        label: Short name
+        type: string
+      - name: institution
+        label: University
+        type: string
+      - name: description
+        label: Site description
+        type: text
+        description: Used by search engines and link previews.
+      - name: url
+        label: Website address
+        type: string
+      - name: currentTerm
+        label: Current term
+        type: string
+        pattern:
+          regex: "^[0-9]{4}-[0-9]{4}$"
+          message: Use the form 2026-2027.
+        description: >-
+          THE ANNUAL ROLLOVER. Board members whose term matches this show as
+          current officers; everyone else moves to Past Boards.
+      - name: foundedYear
+        label: Year founded
+        type: string
+      - name: membershipFormUrl
+        label: Membership form link
+        type: string
+        description: >-
+          Paste the share link to your Google or Microsoft form. The Membership
+          page will embed the form AND build a matching QR code from it. Leave
+          blank to show a "coming soon" message instead.
+      - name: contactEmail
+        label: Contact email
+        type: string
+      - name: center
+        label: Geospatial Center
+        type: object
+        fields:
+          - name: name
+            label: Name
+            type: string
+          - name: url
+            label: Website
+            type: string
+          - name: address
+            label: Address
+            type: string
+      - name: social
+        label: Social media
+        type: object
+        description: Leave any blank to hide that icon.
+        fields:
+          - name: instagram
+            label: Instagram URL
+            type: string
+          - name: linkedin
+            label: LinkedIn URL
+            type: string
+          - name: github
+            label: GitHub URL
+            type: string
+
+  - name: home_page
+    label: Home Page
+    description: Wording on the home page.
+    type: file
+    path: src/_data/home.json
+    fields:
+      - name: heroImage
+        label: "Top banner: photo"
+        type: image
+        description: >-
+          A wide campus photo across the top of the page. Landscape shots work
+          best. Leave empty and a grey "Campus photo" placeholder is shown.
+      - name: heroImageAlt
+        label: "Top banner: photo description"
+        type: string
+        description: >-
+          Describes the photo for screen readers and for anyone whose images
+          fail to load. For example: "Saint Louis University campus in autumn".
+      - name: aboutHeading
+        label: "About section: heading"
+        type: string
+      - name: aboutBody
+        label: "About section: text"
+        type: rich-text
+      - name: bylawsHeading
+        label: "Bylaws section: label on the document bar"
+        type: string
+        description: >-
+          The small label in the grey strip above the document, next to
+          "Open in a new tab". There is no large heading on this section.
+      - name: bylawsNote
+        label: "Bylaws section: note under the heading"
+        type: string
+      - name: bylawsFile
+        label: "Bylaws section: PDF file"
+        type: file
+        options:
+          categories: [document]
+        description: >-
+          Upload the bylaws as a PDF and it appears in a reader on the page.
+          Leave empty and a placeholder box is shown instead.
+      - name: bylawsEmpty
+        label: "Bylaws section: text when no PDF is uploaded"
+        type: string
+      - name: newsHeading
+        label: "News section: heading"
+        type: string
+      - name: newsEmpty
+        label: "News section: text when there is no news"
+        type: string
+      - name: newsArchiveLabel
+        label: "News section: link to the full list"
+        type: string
+        description: >-
+          The home page shows the ten newest items. This link appears under
+          them once there are more than ten.
+      - name: supportersHeading
+        label: "Supporters section: heading"
+        type: string
+      - name: supportersNote
+        label: "Supporters section: note under the heading"
+        type: string
+      - name: supporters
+        label: "Supporters: logos"
+        type: object
+        list: true
+        description: >-
+          Logos scroll across the page in a moving row. Add, remove or reorder
+          them freely. While this list is empty, placeholder boxes are shown.
+        fields:
+          - name: name
+            label: Organisation name
+            type: string
+            required: true
+            description: Used as the image description for screen readers.
+          - name: image
+            label: Logo
+            type: image
+            required: true
+            description: >-
+              A PNG or SVG with a transparent background looks best. Wide
+              logos work better than tall ones.
+          - name: url
+            label: Website (optional)
+            type: string
+            description: If filled in, the logo becomes a link.
+      - name: ctaHeading
+        label: "Bottom box: heading"
+        type: string
+      - name: ctaBody
+        label: "Bottom box: text"
+        type: rich-text
+      - name: ctaButton
+        label: "Bottom box: first button label"
+        type: string
+        description: Links to the Membership page.
+      - name: ctaButtonSecondary
+        label: "Bottom box: second button label"
+        type: string
+        description: Links to the Executive Board page.
+
+  - name: board_page
+    label: Board Page
+    description: Wording on the Executive Board page.
+    type: file
+    path: src/_data/boardPage.json
+    fields:
+      - name: title
+        label: Page title
+        type: string
+      - name: intro
+        label: Introduction
+        type: text
+      - name: advisorHeading
+        label: "Advisor section: heading"
+        type: string
+      - name: advisorNote
+        label: "Advisor section: note"
+        type: string
+      - name: archiveHeading
+        label: "Past boards: heading"
+        type: string
+      - name: archiveNote
+        label: "Past boards: note"
+        type: string
+      - name: electionsHeading
+        label: "Elections box: heading"
+        type: string
+      - name: electionsBody
+        label: "Elections box: text"
+        type: rich-text
+      - name: electionsReference
+        label: "Elections box: bylaws reference"
+        type: string
+
+  - name: funding_page
+    label: Funding Page
+    description: Wording on the Funding & Awards page.
+    type: file
+    path: src/_data/fundingPage.json
+    fields:
+      - name: title
+        label: Page title
+        type: string
+      - name: intro
+        label: Introduction
+        type: text
+      - name: policyHeading
+        label: "Fairness policy: heading"
+        type: string
+      - name: policyBody
+        label: "Fairness policy: text"
+        type: rich-text
+      - name: policyReference
+        label: "Fairness policy: bylaws reference"
+        type: string
+      - name: awardsHeading
+        label: "Opportunities: heading"
+        type: string
+      - name: awardsEmpty
+        label: "Opportunities: text when there are none"
+        type: text
+      - name: recipientsHeading
+        label: "Recipients: heading"
+        type: string
+      - name: recipientsNote
+        label: "Recipients: note"
+        type: string
+      - name: externalHeading
+        label: "Other funding: heading"
+        type: string
+      - name: externalNote
+        label: "Other funding: note"
+        type: string
+      - name: external
+        label: "Other funding: links"
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Name
+            type: string
+          - name: url
+            label: Web address
+            type: string
+          - name: description
+            label: Description
+            type: text
+
+  - name: membership_page
+    label: Membership Page
+    description: Wording on the Membership page.
+    type: file
+    path: src/_data/membershipPage.json
+    fields:
+      - name: title
+        label: Page title
+        type: string
+      - name: intro
+        label: Introduction
+        type: text
+      - name: tiersHeading
+        label: "Who can join: heading"
+        type: string
+      - name: tiers
+        label: "Who can join: list"
+        type: object
+        list: true
+        fields:
+          - name: text
+            label: Item
+            type: text
+      - name: tiersReference
+        label: "Who can join: bylaws reference"
+        type: string
+      - name: benefitsHeading
+        label: "Benefits: heading"
+        type: string
+      - name: benefits
+        label: "Benefits: list"
+        type: object
+        list: true
+        fields:
+          - name: text
+            label: Item
+            type: text
+      - name: joinHeading
+        label: "How to join: heading"
+        type: string
+      - name: steps
+        label: "How to join: numbered steps"
+        type: object
+        list: true
+        fields:
+          - name: text
+            label: Step
+            type: text
+      - name: formButtonLabel
+        label: Form button label
+        type: string
+      - name: qrCaption
+        label: QR code caption
+        type: string
+      - name: pendingHeading
+        label: "No form yet: heading"
+        type: string
+      - name: pendingBody
+        label: "No form yet: text"
+        type: rich-text
+      - name: conductHeading
+        label: "Conduct: heading"
+        type: string
+      - name: conductBody
+        label: "Conduct: text"
+        type: rich-text
+      - name: conductReference
+        label: "Conduct: bylaws reference"
+        type: string
+
+  - name: admin_page
+    label: Editor Guide Settings
+    description: The links used on the /admin/ page.
+    type: file
+    path: src/_data/admin.json
+    fields:
+      - name: editorUrl
+        label: Editor address
+        type: string
+      - name: repoUrl
+        label: Repository address
+        type: string
+      - name: note
+        label: Sign-in note
+        type: text

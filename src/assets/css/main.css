@@ -1,0 +1,2197 @@
+/* ==========================================================================
+   GSSA — Geospatial Science Student Association at Saint Louis University
+   Palette sampled from the GSSA logo (gssa_logo.svg).
+   ========================================================================== */
+
+:root {
+  /* Brand */
+  --navy: #012757;
+  --navy-deep: #001a3b;
+  --blue: #1b449c;
+  --blue-bright: #2f5fc4;
+  --gold: #f6cc46;
+  --gold-deep: #d9a91f;
+  /* #d9a91f is only 2.18:1 on white — fine behind dark text, not as text.
+     This darker amber reads as the same accent and clears WCAG AA. */
+  --gold-text: #8a6508;
+
+  /* Neutrals */
+  --ink: #16233d;
+  --body: #292f3b;
+  --muted: #656c77;
+  --line: #e2e7ef;
+  --line-soft: #eef2f7;
+  --bg: #ffffff;
+  --bg-alt: #f6f8fb;
+
+  /* Sidebar */
+  --sidebar-w: 17.5rem;
+  --sidebar-fg: #eaf0fa;
+  --sidebar-fg-dim: #9db0cf;
+
+  /* Type
+     Space Grotesk for headings — geometric, slightly technical, a good match
+     for a geospatial group. Ubuntu Sans for text.
+     Both fall back to the system stack if Google Fonts is unreachable.
+
+     Ubuntu Sans, not the classic "Ubuntu" family: that one ships no weight
+     600, and font-synthesis-weight is off below, so every 600 would snap to
+     700. Ubuntu Sans is variable and covers the whole range. */
+  --font: "Ubuntu Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Space Grotesk", "Ubuntu Sans", ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, "Cascadia Mono",
+    "Courier New", monospace;
+
+  /* Fluid type scale — one ratio, so every size relates to the others. */
+  --step--2: clamp(0.69rem, 0.67rem + 0.08vw, 0.73rem);
+  --step--1: clamp(0.82rem, 0.79rem + 0.13vw, 0.89rem);
+  --step-0: clamp(1rem, 0.96rem + 0.19vw, 1.09rem);
+  --step-1: clamp(1.19rem, 1.12rem + 0.33vw, 1.36rem);
+  --step-2: clamp(1.41rem, 1.29rem + 0.55vw, 1.7rem);
+  --step-3: clamp(1.67rem, 1.48rem + 0.87vw, 2.13rem);
+  --step-4: clamp(1.98rem, 1.69rem + 1.32vw, 2.66rem);
+
+  /* Vertical rhythm */
+  --flow: 1.15em;
+  --space-section: clamp(2.75rem, 2rem + 2.5vw, 4rem);
+  --measure: 68ch;
+
+  --radius: 12px;
+  --radius-lg: 16px;
+  /* Two-part shadows: a tight contact shadow plus a wide soft one. Reads as
+     depth rather than as a grey halo. */
+  --shadow-sm: 0 1px 2px rgba(1, 39, 87, 0.04), 0 2px 6px -2px rgba(1, 39, 87, 0.08);
+  --shadow: 0 1px 2px rgba(1, 39, 87, 0.04), 0 10px 24px -10px rgba(1, 39, 87, 0.16);
+  --shadow-lift: 0 2px 6px rgba(1, 39, 87, 0.06), 0 22px 44px -16px rgba(1, 39, 87, 0.24);
+  --ring: 0 0 0 1px rgba(27, 68, 156, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   Reset
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: var(--step-0);
+  /* Ubuntu Sans runs lighter than Inter did at the same nominal weight, so
+     body text sits just above regular. Requires the variable range in the
+     font request — with discrete weights this would snap to 400 or 500,
+     because font-synthesis-weight is off below. */
+  font-weight: 450;
+  line-height: 1.7;
+  color: var(--body);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  color: var(--navy);
+}
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  margin: 0 0 0.5em;
+  font-weight: 700;
+  /* Large type needs negative tracking to stop looking loose; small type
+     does not, so the values tighten as the sizes grow. */
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--step-4);
+  line-height: 1.08;
+  letter-spacing: -0.032em;
+}
+
+h2 {
+  font-size: var(--step-2);
+  line-height: 1.18;
+  letter-spacing: -0.022em;
+}
+
+h3 {
+  font-size: var(--step-1);
+  line-height: 1.28;
+  letter-spacing: -0.014em;
+}
+
+h4 {
+  font-size: var(--step-0);
+  line-height: 1.35;
+  letter-spacing: -0.008em;
+}
+
+p {
+  margin: 0 0 var(--flow);
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+strong,
+b {
+  font-weight: 650;
+  color: var(--ink);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2.5rem 0;
+}
+
+/* Skip link — first tab stop, hidden until focused. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--gold);
+  color: var(--navy);
+  font-weight: 700;
+  border-radius: 0 0 var(--radius) 0;
+}
+
+.skip-link:focus {
+  left: 0;
+  top: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Shell — mobile first: stacked. Side-by-side from 51rem, as on the
+   reference layout.
+   -------------------------------------------------------------------------- */
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* --------------------------------------------------------------------------
+   Sidebar
+   -------------------------------------------------------------------------- */
+
+.sidebar {
+  position: relative;
+  flex: 0 0 auto;
+  background-color: var(--navy-deep);
+  /* Layered: a cool highlight top-left, a warm gold breath low, over the
+     brand gradient. Gives the rail depth without any image. */
+  background-image:
+    radial-gradient(26rem 20rem at 15% 0%, rgba(59, 118, 214, 0.35), transparent 62%),
+    radial-gradient(20rem 18rem at 90% 100%, rgba(246, 204, 70, 0.1), transparent 60%),
+    linear-gradient(165deg, #02336f 0%, var(--navy-deep) 52%, #000f26 100%);
+  color: var(--sidebar-fg);
+  padding: 2rem 1.5rem 1.75rem;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.06);
+}
+
+/* The animated spatial-network canvas sits behind everything in the sidebar. */
+.sidebar__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.sidebar__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sidebar__brand {
+  display: block;
+  text-decoration: none;
+}
+
+/* The mark is deep blue, so it needs a light plate to sit on against the
+   navy rail. */
+.sidebar__logo {
+  width: 100%;
+  max-width: 12rem;
+  height: auto;
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 0.7rem 0.85rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* The organisation name sits directly on the navy rail, so it is white rather
+   than the brand blue used everywhere else. */
+.sidebar__orgname {
+  margin: 0.85rem 0 0;
+  max-width: none;
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.sidebar__institution {
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0.4rem 0 0;
+}
+
+/* Nav */
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: var(--radius);
+  color: var(--sidebar-fg);
+  text-decoration: none;
+  font-weight: 550;
+  font-size: var(--step--1);
+  letter-spacing: -0.005em;
+  border-left: 3px solid transparent;
+  transition: background-color 0.18s ease, border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.sidebar__link:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #fff;
+}
+
+.sidebar__link[aria-current="page"] {
+  background: rgba(246, 204, 70, 0.14);
+  border-left-color: var(--gold);
+  color: #fff;
+}
+
+.sidebar__meta {
+  font-size: var(--step--2);
+  color: var(--sidebar-fg-dim);
+  line-height: 1.6;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding-top: 1.1rem;
+}
+
+.sidebar__meta a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.sidebar__meta a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.sidebar__meta p {
+  margin: 0 0 0.45rem;
+}
+
+.sidebar__social {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+.sidebar__social a {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--sidebar-fg);
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.sidebar__social a:hover {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.sidebar__social svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+}
+
+/* Below the breakpoint the rail is a banner, not a column: a phone should not
+   have to scroll past a full-height sidebar to reach the page. */
+@media (max-width: 50.999rem) {
+  .sidebar {
+    padding: 1.25rem 1.25rem 1rem;
+  }
+
+  .sidebar__inner {
+    gap: 1rem;
+  }
+
+  .sidebar__logo {
+    max-width: 10rem;
+    padding: 0.55rem 0.7rem;
+  }
+
+  .sidebar__nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .sidebar__link {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.88rem;
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  .sidebar__link[aria-current="page"] {
+    border-left: 0;
+    border-bottom-color: var(--gold);
+  }
+
+  /* Address and socials repeat in the footer on small screens. */
+  .sidebar__meta {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Main content
+   -------------------------------------------------------------------------- */
+
+.main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  /* A faint cool wash keeps white cards reading as raised surfaces rather
+     than dissolving into the page. */
+  background-image:
+    radial-gradient(60rem 32rem at 88% -8%, rgba(27, 68, 156, 0.055), transparent 62%),
+    radial-gradient(44rem 26rem at -6% 12%, rgba(246, 204, 70, 0.05), transparent 58%),
+    linear-gradient(180deg, #ffffff 0%, #fcfdff 42%, var(--bg-alt) 100%);
+  background-repeat: no-repeat;
+}
+
+.content {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 76rem;
+  padding: 2.5rem 1.5rem 3.5rem;
+  margin: 0 auto;
+}
+
+.page-head {
+  margin-bottom: clamp(2rem, 1.5rem + 1.5vw, 3rem);
+}
+
+.page-head h1 {
+  margin-bottom: 0.45rem;
+}
+
+.page-head__sub {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  font-weight: 350;
+  color: var(--muted);
+  margin: 0;
+  max-width: 46ch;
+  letter-spacing: -0.008em;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.7rem;
+}
+
+.section {
+  margin-top: var(--space-section);
+}
+
+.section__head {
+  padding-bottom: 0.8rem;
+  margin-bottom: 1.75rem;
+  background-image: linear-gradient(
+    90deg,
+    var(--blue) 0,
+    var(--blue) 2.25rem,
+    var(--line) 2.25rem,
+    var(--line) 100%
+  );
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+}
+
+.section__head h2 {
+  margin: 0;
+}
+
+.section__note {
+  font-size: var(--step--1);
+  color: var(--muted);
+  margin: 0.5rem 0 0;
+  max-width: 60ch;
+}
+
+.lede {
+  font-size: var(--step-1);
+  line-height: 1.55;
+  font-weight: 350;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  max-width: 54ch;
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 1.75rem 1.5rem;
+  font-size: var(--step--1);
+  color: var(--muted);
+  text-align: center;
+}
+
+.site-footer p {
+  max-width: none;
+}
+
+.site-footer p {
+  margin: 0 0 0.3rem;
+}
+
+/* Only needed where the sidebar meta block is hidden. */
+.site-footer__contact {
+  display: none;
+}
+
+@media (max-width: 50.999rem) {
+  .site-footer__contact {
+    display: block;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Hero (home)
+   -------------------------------------------------------------------------- */
+
+/* The hero is purely a banner photo — the organisation name lives in the
+   sidebar, so no text sits on top of it.
+
+   Same gradient-fade idea as the scrim over the officer bio photo, but masked
+   to transparent rather than painted a colour: the page background behind it
+   carries a faint radial wash, and a flat scrim colour would not match it. The
+   card border and shadow are gone too — a feathered edge inside a hard-edged
+   box reads as a mistake. */
+.hero {
+  /* A direct child of .main, so it fills the column edge to edge with no
+     content padding inset — that padding is what left white gaps above and
+     beside the photo.
+
+     The lower third dissolves to fully transparent. The extra midpoints ease
+     the ramp — a plain two-stop gradient bands visibly across a photo with
+     large flat areas like sky. */
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 46%,
+    rgba(0, 0, 0, 0.72) 66%,
+    rgba(0, 0, 0, 0.3) 80%,
+    transparent 91%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 46%,
+    rgba(0, 0, 0, 0.72) 66%,
+    rgba(0, 0, 0, 0.3) 80%,
+    transparent 91%
+  );
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.72rem 1.35rem;
+  border-radius: var(--radius);
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: var(--step--1);
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease,
+    border-color 0.18s ease, transform 0.18s ease;
+}
+
+.btn--primary {
+  background-image: linear-gradient(180deg, #2551b3 0%, var(--blue) 100%);
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(1, 39, 87, 0.18),
+    0 8px 18px -8px rgba(27, 68, 156, 0.6);
+}
+
+.btn--primary:hover {
+  background-image: linear-gradient(180deg, #1d4aaa 0%, var(--navy) 100%);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(1, 39, 87, 0.2),
+    0 14px 26px -10px rgba(27, 68, 156, 0.6);
+}
+
+.btn--primary:active {
+  transform: translateY(0);
+}
+
+.btn--ghost {
+  border-color: rgba(27, 68, 156, 0.18);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn--ghost:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+  transform: translateY(-1px);
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   Feature grid (what GSSA does)
+   -------------------------------------------------------------------------- */
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+}
+
+.feature {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.35rem;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.feature:hover {
+  transform: translateY(-2px);
+  border-color: rgba(27, 68, 156, 0.22);
+  box-shadow: var(--shadow);
+}
+
+.feature h3 {
+  font-size: var(--step-0);
+  margin-bottom: 0.35rem;
+}
+
+.feature p {
+  font-size: var(--step--1);
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+  max-width: none;
+}
+
+/* --------------------------------------------------------------------------
+   News feed
+   -------------------------------------------------------------------------- */
+
+.news {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.news__item {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 1.5rem;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.news__item:last-child {
+  border-bottom: 0;
+}
+
+.news__date {
+  font-family: var(--font-display);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--blue);
+  padding-top: 0.35rem;
+  white-space: nowrap;
+}
+
+.news__title {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: -0.016em;
+  color: var(--ink);
+  margin: 0 0 0.3rem;
+}
+
+.news__body {
+  font-size: var(--step--1);
+  line-height: 1.65;
+}
+
+.news__body > :last-child {
+  margin-bottom: 0;
+}
+
+.news__img {
+  margin-top: 0.75rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+
+.news__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 0.86rem;
+}
+
+.news__links a {
+  font-weight: 600;
+}
+
+.news__links a::before {
+  content: "[";
+  color: var(--muted);
+}
+
+.news__links a::after {
+  content: "]";
+  color: var(--muted);
+}
+
+@media (max-width: 34rem) {
+  .news__item {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   People (E-Board) — compact centred cards with the bio behind a disclosure,
+   after the CTrees team layout. Built on <details>/<summary>: keyboard
+   accessible, works without JavaScript.
+   -------------------------------------------------------------------------- */
+
+.people {
+  display: grid;
+  gap: 2.25rem 1.25rem;
+  /* 13rem gives exactly four tracks in the 69rem-wide content column, so the
+     four officers fill one row at ~16rem each and a long name like
+     "Mustafizur Rahaman" stays on one line. The old 9.5rem was sized for a
+     52rem column and left two empty tracks once the column widened, squeezing
+     every card. auto-fill, not auto-fit: the advisor grid holds one card and
+     auto-fit would stretch it across the whole row. */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+  /* Stretch, not start: names and programs wrap to different depths, so the
+     cards are made equal height and the "read bio" links pinned to a shared
+     baseline. Ragged link heights read as sloppy. */
+  align-items: stretch;
+}
+
+.person {
+  min-width: 0;
+}
+
+.person__summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.3rem;
+  height: 100%;
+  cursor: pointer;
+  list-style: none;
+  padding: 0.25rem;
+  border-radius: var(--radius);
+}
+
+.person__summary::-webkit-details-marker {
+  display: none;
+}
+
+.person--static .person__summary {
+  cursor: default;
+}
+
+.person__summary:hover .person__name {
+  color: var(--blue);
+}
+
+details.person > summary:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* Photos show in full colour. `object-fit: cover` plus a fixed square box
+   means any upload — portrait, landscape, phone snapshot — is centre-cropped
+   into the circle without distortion, so officers never have to crop first. */
+.person__photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  /* Bias the crop upward, as the bio drawer already does. A square cut from
+     the middle of a portrait lands around the mouth and slices off the top of
+     the head, which is what makes a headshot look zoomed in. */
+  object-position: center 25%;
+  margin-bottom: 0.55rem;
+  background: var(--bg-alt);
+  box-shadow: 0 0 0 1px var(--line), 0 4px 14px rgba(1, 39, 87, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.person__summary:hover .person__photo {
+  transform: scale(1.04);
+  box-shadow: 0 0 0 2px var(--blue), 0 12px 26px -8px rgba(1, 39, 87, 0.35);
+}
+
+/* Shown until a headshot is uploaded. Deliberately plain, so a board with
+   missing photos still looks finished rather than broken. */
+.person__photo--empty {
+  display: grid;
+  place-items: center;
+  background: var(--bg-alt);
+  border: 1px dashed var(--line);
+  box-shadow: none;
+  color: #b9c4d4;
+}
+
+.person__photo--empty svg {
+  width: 46%;
+  height: 46%;
+  fill: currentColor;
+}
+
+.person__summary:hover .person__photo--empty {
+  box-shadow: none;
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.person__name {
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: 600;
+  letter-spacing: -0.014em;
+  color: var(--ink);
+  line-height: 1.28;
+  transition: color 0.18s ease;
+}
+
+.person__role {
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.person__role--advisor {
+  color: var(--gold-text);
+}
+
+.person__program {
+  font-size: var(--step--1);
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.person__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: auto;
+  padding-top: 0.6rem;
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.person__caret {
+  width: 9px;
+  height: 6px;
+  fill: currentColor;
+  transition: transform 0.2s ease;
+}
+
+.person[open] .person__caret {
+  transform: rotate(180deg);
+}
+
+/* With the drawer active the bio slides in from the right, so the arrow points
+   that way. Without JavaScript the panel opens downwards and the arrow keeps
+   pointing down — in both modes it describes what actually happens. */
+.has-bio-drawer .person__caret,
+.has-bio-drawer .person[open] .person__caret {
+  transform: rotate(-90deg);
+}
+
+.has-bio-drawer .person__summary:hover .person__caret {
+  transform: rotate(-90deg) translateY(2px);
+}
+
+.person[open] .person__toggle-text::after {
+  content: " ";
+}
+
+/* Opening a card gives it the full row, so the bio has room to read rather
+   than being squeezed into a 10rem column. */
+.person[open] {
+  grid-column: 1 / -1;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--bg-alt);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+/* Open: photo on the left, the name/role/program stack beside it, toggle on
+   the right. A grid rather than a wrapping flex row, so the program line stays
+   with the name instead of dropping under the photo. */
+.person[open] .person__summary {
+  display: grid;
+  height: auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "photo name    toggle"
+    "photo role    toggle"
+    "photo program toggle";
+  align-items: center;
+  justify-items: start;
+  text-align: left;
+  column-gap: 1.25rem;
+  row-gap: 0.15rem;
+}
+
+.person[open] .person__photo {
+  grid-area: photo;
+  align-self: center;
+  margin-bottom: 0;
+}
+
+.person[open] .person__name {
+  grid-area: name;
+  font-size: 1.15rem;
+  align-self: end;
+}
+
+.person[open] .person__role {
+  grid-area: role;
+}
+
+.person[open] .person__program {
+  grid-area: program;
+  align-self: start;
+}
+
+.person[open] .person__toggle {
+  grid-area: toggle;
+  margin-top: 0;
+  padding-top: 0;
+  align-self: center;
+}
+
+/* No program set: collapse to two rows so the stack stays vertically centred. */
+.person[open] .person__summary:not(:has(.person__program)) {
+  grid-template-areas:
+    "photo name toggle"
+    "photo role toggle";
+}
+
+.person__panel {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.92rem;
+  max-width: 44rem;
+}
+
+.person__pron {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0 0 0.6rem;
+}
+
+.person__pron-label {
+  font-style: normal;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.68rem;
+  color: var(--blue);
+  margin-right: 0.35rem;
+}
+
+.person__bio > :last-child {
+  margin-bottom: 0;
+}
+
+.person__contact {
+  font-size: 0.85rem;
+  margin: 0.9rem 0 0;
+}
+
+.person__contact span {
+  color: var(--muted);
+}
+
+@media (min-width: 40rem) {
+  .person__photo {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Bio drawer — the enhanced path. One <dialog> reused for every officer, so
+   only one bio can be open at a time. The inline .person__panel below is the
+   no-JavaScript fallback and is hidden once the drawer takes over.
+   -------------------------------------------------------------------------- */
+
+.has-bio-drawer .person__panel {
+  display: none;
+}
+
+/* With the drawer active a card never expands, so the full-row open styles
+   are not needed either. */
+.has-bio-drawer .person[open] {
+  grid-column: auto;
+  border: 0;
+  background: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.bio-drawer {
+  /* Pinned to the right edge, full height, rather than the centred default. */
+  margin: 0 0 0 auto;
+  padding: 0;
+  width: min(30rem, 100%);
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: var(--bg);
+  color: var(--body);
+  overflow-y: auto;
+  box-shadow: -12px 0 40px rgba(1, 39, 87, 0.22);
+}
+
+.bio-drawer::backdrop {
+  background: rgba(1, 20, 46, 0.55);
+}
+
+.bio-drawer[open] {
+  animation: drawer-in 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bio-drawer[open]::backdrop {
+  animation: drawer-fade 0.28s ease;
+}
+
+.bio-drawer.is-closing {
+  animation: drawer-out 0.22s ease forwards;
+}
+
+.bio-drawer.is-closing::backdrop {
+  animation: drawer-fade 0.22s ease reverse forwards;
+}
+
+@keyframes drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes drawer-out {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes drawer-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.bio-drawer__close {
+  position: absolute;
+  z-index: 2;
+  top: 1rem;
+  right: 1rem;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 20, 46, 0.55);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.bio-drawer__close:hover {
+  background: var(--navy);
+  transform: scale(1.06);
+}
+
+.bio-drawer__close svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+}
+
+/* The photo runs the full width of the drawer and carries the name, the way a
+   title sits on a cover image. */
+.bio-drawer__media {
+  position: relative;
+  /* 16rem against the drawer's 44rem width was a 2.75:1 slit: cropped from a
+     portrait it showed only about 18%-45% of the frame, which on a tightly
+     framed headshot is brow to glasses and nothing else. Taller lets a whole
+     face through. */
+  height: 30rem;
+  background: var(--navy-deep);
+  overflow: hidden;
+}
+
+.bio-drawer__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%; /* bias upward — heads sit high in a portrait */
+  display: block;
+}
+
+/* Scrim: keeps the name readable over a bright or busy photo. */
+.bio-drawer__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 20, 46, 0.1) 0%,
+    rgba(0, 20, 46, 0.45) 45%,
+    rgba(0, 20, 46, 0.92) 100%
+  );
+}
+
+/* No photo: the brand gradient plus a large watermark, so it still reads as a
+   deliberate cover rather than a gap. */
+.bio-drawer__media--empty {
+  background-image: linear-gradient(150deg, #02306b 0%, var(--navy-deep) 60%, #00142e 100%);
+}
+
+.bio-drawer__photo--empty {
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.16);
+}
+
+.bio-drawer__photo--empty svg {
+  width: 8rem;
+  height: 8rem;
+  fill: currentColor;
+}
+
+.bio-drawer__media--empty::after {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 20, 46, 0.35) 55%,
+    rgba(0, 20, 46, 0.85) 100%
+  );
+}
+
+.bio-drawer__heading {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.5rem;
+}
+
+.bio-drawer__role {
+  font-family: var(--font-display);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 0.25rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.bio-drawer__name {
+  font-size: var(--step-3);
+  line-height: 1.1;
+  letter-spacing: -0.028em;
+  color: #fff;
+  margin: 0;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
+}
+
+.bio-drawer__body {
+  padding: 1.5rem;
+}
+
+.bio-drawer__program {
+  font-size: 0.9rem;
+  color: var(--blue);
+  font-weight: 600;
+  margin: 0 0 1.1rem;
+}
+
+.bio-drawer__content {
+  border-top: 1px solid var(--line);
+  padding-top: 1.25rem;
+  font-size: 0.95rem;
+}
+
+.bio-drawer__content > :last-child {
+  margin-bottom: 0;
+}
+
+/* On a phone the drawer becomes a bottom sheet — a 30rem rail off the side of
+   a 375px screen would just be a full-screen panel with an awkward entrance. */
+@media (max-width: 34rem) {
+  .bio-drawer {
+    /* The UA stylesheet anchors a modal dialog to both the top and bottom
+       edges, which makes `height: auto` stretch to fill. Releasing the top
+       lets the sheet hug its content and sit on the bottom edge. */
+    top: auto;
+    bottom: 0;
+    margin: 0;
+    width: 100%;
+    height: auto;
+    max-height: 88%;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: 0;
+    /* overflow-y stays auto (inherited from the base rule) so a long bio can
+       still scroll; the hero rounds its own top corners instead. */
+  }
+
+  .bio-drawer__media {
+    height: 12rem;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .bio-drawer__heading,
+  .bio-drawer__body {
+    padding: 1.25rem;
+  }
+
+  .bio-drawer__name {
+    font-size: 1.35rem;
+  }
+
+  .bio-drawer[open] {
+    animation-name: sheet-in;
+  }
+
+  .bio-drawer.is-closing {
+    animation-name: sheet-out;
+  }
+
+  @keyframes sheet-in {
+    from {
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes sheet-out {
+    to {
+      transform: translateY(100%);
+    }
+  }
+}
+
+/* Past boards */
+.archive {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0;
+  margin-bottom: 0.75rem;
+  background: var(--bg-alt);
+}
+
+.archive > summary {
+  cursor: pointer;
+  padding: 0.9rem 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.archive > summary::-webkit-details-marker {
+  display: none;
+}
+
+.archive > summary::before {
+  content: "▸";
+  color: var(--blue);
+  transition: transform 0.18s ease;
+}
+
+.archive[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.archive__body {
+  padding: 0 1.15rem 1.15rem;
+}
+
+.roster {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.92rem;
+}
+
+.roster li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.roster li:last-child {
+  border-bottom: 0;
+}
+
+.roster__role {
+  font-weight: 700;
+  color: var(--ink);
+  min-width: 12rem;
+}
+
+/* --------------------------------------------------------------------------
+   Awards
+   -------------------------------------------------------------------------- */
+
+.award {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--blue);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.6rem;
+  margin-bottom: 1.25rem;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.award:hover {
+  box-shadow: var(--shadow);
+}
+
+.award--open {
+  border-left-color: #15803d;
+}
+.award--upcoming {
+  border-left-color: var(--gold-deep);
+}
+.award--closed {
+  border-left-color: var(--muted);
+  background: var(--bg-alt);
+}
+
+.award__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.award__head h3 {
+  margin: 0;
+  font-size: var(--step-1);
+}
+
+.badge {
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.6rem;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.badge--open {
+  background: #dcfce7;
+  color: #14532d;
+}
+.badge--upcoming {
+  background: #fef3c7;
+  color: #78350f;
+}
+.badge--closed {
+  background: #eef2f7;
+  color: #475569;
+}
+
+.award__summary {
+  color: var(--body);
+}
+
+/* The disclosure table — Bylaws Art. VIII 8.13 requires each of these to be
+   published before applications open. */
+.disclosure {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+  margin: 1.25rem 0 0;
+}
+
+.disclosure th,
+.disclosure td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.6rem 0.75rem 0.6rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.disclosure th {
+  width: 12rem;
+  color: var(--ink);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.disclosure tr:last-child th,
+.disclosure tr:last-child td {
+  border-bottom: 0;
+}
+
+.disclosure td.pending {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+/* Recipients */
+.recipients {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+}
+
+.recipient {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 1.35rem;
+  text-align: center;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recipient:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.recipient__photo {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  margin: 0 auto 0.8rem;
+  border: 3px solid var(--gold);
+  background: var(--bg-alt);
+}
+
+.recipient__photo--empty {
+  display: grid;
+  place-items: center;
+  border-style: dashed;
+  border-color: var(--line);
+  color: #b9c4d4;
+}
+
+.recipient__photo--empty svg {
+  width: 46%;
+  height: 46%;
+  fill: currentColor;
+}
+
+.recipient__name {
+  font-size: 1rem;
+  margin: 0 0 0.2rem;
+}
+
+.recipient__award {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.5rem;
+}
+
+.recipient__note {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Membership
+   -------------------------------------------------------------------------- */
+
+.callout {
+  border: 1px solid rgba(217, 169, 31, 0.28);
+  border-left: 3px solid var(--gold);
+  background-image: linear-gradient(180deg, #fffdf4 0%, #fffaea 100%);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.6rem;
+  margin: 1.75rem 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.callout > :last-child {
+  margin-bottom: 0;
+}
+
+.callout h3 {
+  margin-top: 0;
+}
+
+.callout--info {
+  border-color: rgba(27, 68, 156, 0.18);
+  border-left-color: var(--blue);
+  background-image: linear-gradient(180deg, #f7faff 0%, #eff4fe 100%);
+}
+
+.steps {
+  counter-reset: step;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 2.9rem;
+  margin-bottom: 1.2rem;
+  max-width: var(--measure);
+}
+
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 1.9rem;
+  height: 1.9rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.steps strong {
+  color: var(--ink);
+}
+
+.join {
+  display: grid;
+  gap: 1.75rem;
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+@media (min-width: 40rem) {
+  .join--with-qr {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+.qr {
+  text-align: center;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 1.35rem;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.qr svg {
+  width: 180px;
+  height: 180px;
+  display: block;
+  margin: 0 auto 0.6rem;
+}
+
+.qr figcaption {
+  font-size: 0.78rem;
+  color: var(--muted);
+  max-width: 180px;
+  line-height: 1.45;
+}
+
+.embed {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-alt);
+}
+
+.embed iframe {
+  display: block;
+  width: 100%;
+  min-height: 70vh;
+  border: 0;
+}
+
+.rights {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rights li {
+  position: relative;
+  padding-left: 1.7rem;
+  margin-bottom: 0.8rem;
+  font-size: var(--step-0);
+  line-height: 1.65;
+  max-width: var(--measure);
+}
+
+.rights li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px rgba(246, 204, 70, 0.25);
+}
+
+.ref {
+  font-size: var(--step--2);
+  color: var(--muted);
+  font-style: italic;
+  letter-spacing: 0.005em;
+}
+
+/* --------------------------------------------------------------------------
+   Admin / editor guide
+   -------------------------------------------------------------------------- */
+
+.admin-launch {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--navy-deep);
+  background-image:
+    radial-gradient(30rem 18rem at 100% 0%, rgba(59, 118, 214, 0.4), transparent 62%),
+    linear-gradient(150deg, #02336f 0%, var(--navy-deep) 100%);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+  color: var(--sidebar-fg);
+  box-shadow: var(--shadow);
+}
+
+.admin-launch h2 {
+  color: #fff;
+  margin-top: 0;
+}
+
+.admin-launch p {
+  color: var(--sidebar-fg-dim);
+}
+
+.admin-launch strong {
+  color: #fff;
+}
+
+.admin-launch .btn--primary {
+  background: var(--gold);
+  color: var(--navy);
+  margin-top: 0.5rem;
+}
+
+.admin-launch .btn--primary:hover {
+  background: #fff;
+  color: var(--navy);
+}
+
+.admin-tasks {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+}
+
+.admin-task {
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--blue);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.45rem;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  font-size: var(--step--1);
+  line-height: 1.6;
+}
+
+.admin-task h3 {
+  margin-top: 0;
+  margin-bottom: 0.15rem;
+}
+
+.admin-task__what {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 0.85rem;
+}
+
+.admin-task__tip {
+  background: var(--bg-alt);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.9rem;
+  font-size: 0.88rem;
+  margin-bottom: 0;
+}
+
+.admin-task code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--line-soft);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Home page: the content sheet overlaps the banner photo
+   -------------------------------------------------------------------------- */
+
+/* No panel, no background, no corners — anything with an edge draws a visible
+   line across the photo, because the content column is narrower than the
+   full-width banner. Instead the photo itself dissolves to nothing and the
+   text simply begins inside the dissolved area. */
+.main--home .content {
+  position: relative;
+  z-index: 1;
+  margin-top: calc(-1 * clamp(3rem, 1.5rem + 5vw, 7rem));
+  padding-top: 0;
+  /* The 76rem cap centres the column and leaves a wide margin either side, so
+     the news rail floats well inside the right edge. Lifting it on the home
+     page lets the grid span the full width and puts the rail hard right, one
+     page margin in. Prose is unaffected — p is capped at --measure anyway.
+
+     Bounded rather than removed: 120rem is wider than any normal monitor
+     reaches, so the rail still sits hard right up to ~2200px, but the page
+     cannot grow past the width of the logo strip's repeating tile. */
+  max-width: 120rem;
+}
+
+/* --------------------------------------------------------------------------
+   Home page: main column plus a news rail
+   -------------------------------------------------------------------------- */
+
+.home-cols {
+  display: grid;
+  gap: var(--space-section);
+}
+
+/* Two columns only when there is genuinely room for both. Below this the rail
+   drops underneath the main column and reads as a normal section.
+
+   The rail grows with the window rather than sitting at a fixed width, so it
+   gains room on a large monitor without squeezing the main column on a laptop.
+   The breakpoint is set by the narrowest window where both columns still work:
+   at 72rem the main column is about 21rem wide once the sidebar, the content
+   padding and the rail are taken out. */
+@media (min-width: 72rem) {
+  .home-cols {
+    grid-template-columns: minmax(0, 1fr) clamp(22rem, 18rem + 8vw, 28rem);
+    gap: clamp(2rem, 1rem + 3vw, 3.5rem);
+    align-items: start;
+  }
+
+  /* The first section in each column sets its own top margin; without this the
+     rail would sit lower than the main column. */
+  .home-cols__main > .section:first-child {
+    margin-top: 0;
+  }
+
+  .home-cols__rail {
+    /* Line the top of the rail up with the first line of body text in the
+       About column: one section heading (h2 at its 1.18 line-height) plus the
+       heading block's padding-bottom and margin-bottom. Derived from the same
+       tokens the heading uses, so the two stay aligned if the type scale or
+       that spacing ever changes. This lands just past the point where the
+       banner has faded to fully transparent, so the card still clears it. */
+    margin-top: calc(var(--step-2) * 1.18 + 0.8rem + 1.75rem);
+    position: sticky;
+    top: 2rem;
+    /* Never taller than the viewport, so a long news list scrolls inside the
+       rail rather than getting clipped. */
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+}
+
+.rail {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+  box-shadow: var(--shadow-sm);
+  padding: 1.25rem 1.35rem 1.35rem;
+}
+
+.rail__head {
+  padding-bottom: 0.6rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--blue);
+}
+
+.rail__head h2 {
+  margin: 0;
+  font-size: var(--step-1);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Compact news for the rail: the date sits above the headline instead of
+   beside it, and everything steps down one size. */
+.news--rail .news__item {
+  grid-template-columns: 1fr;
+  gap: 0.3rem;
+  padding: 1rem 0;
+}
+
+.news--rail .news__item:first-child {
+  padding-top: 0;
+}
+
+.news--rail .news__date {
+  padding-top: 0;
+  font-size: 0.7rem;
+}
+
+.news--rail .news__title {
+  font-size: var(--step-0);
+}
+
+.news--rail .news__body {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--body);
+}
+
+.news--rail .news__body p {
+  max-width: none;
+}
+
+.news--rail .news__img {
+  margin-top: 0.5rem;
+}
+
+.news--rail .news__links {
+  font-size: 0.78rem;
+}
+
+/* --------------------------------------------------------------------------
+   Hero photo
+   -------------------------------------------------------------------------- */
+
+.hero__media {
+  line-height: 0;
+}
+
+.hero__img {
+  display: block;
+  width: 100%;
+  height: clamp(14rem, 10rem + 20vw, 26rem);
+  object-fit: cover;
+}
+
+/* Shown until an officer uploads a photo in the CMS. */
+.hero__img--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--bg-alt) 0 12px,
+    #eef2f8 12px 24px
+  );
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Document viewer (bylaws PDF)
+   -------------------------------------------------------------------------- */
+
+.doc {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--bg);
+  box-shadow: var(--shadow-sm);
+}
+
+.doc__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--line);
+}
+
+.doc__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.doc__open {
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.doc__frame {
+  display: block;
+  width: 100%;
+  height: clamp(24rem, 18rem + 24vw, 40rem);
+  border: 0;
+}
+
+.doc__frame--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(12rem, 9rem + 10vw, 18rem);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--bg-alt) 0 12px,
+    #eef2f8 12px 24px
+  );
+  color: var(--muted);
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.doc__frame--empty p {
+  margin: 0;
+}
+
+.doc__fallback {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   News archive link
+   -------------------------------------------------------------------------- */
+
+.news__more {
+  margin-top: 1.5rem;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Supporter logos — a continuously scrolling window
+   -------------------------------------------------------------------------- */
+
+.marquee {
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem 0;
+  border-block: 1px solid var(--line);
+  /* Fade both edges so logos enter and leave rather than being cut off. */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 32s linear infinite;
+}
+
+/* Two identical groups sit side by side; shifting the track by exactly half
+   its width puts the copy where the original started, so the loop is seamless. */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__group {
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 1rem + 4vw, 4.5rem);
+  margin: 0;
+  padding: 0 clamp(1rem, 0.5rem + 2vw, 2.25rem);
+  list-style: none;
+}
+
+/* A fixed box that every logo is fitted inside, rather than a fixed height.
+   The logos here have opposite proportions — the Geospatial lockup is wide
+   (2.44:1), the SLU shield is tall (0.75:1) — and matching them on height
+   alone would shrink the tall one to an illegible sliver. */
+.marquee__item {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 11rem;
+  height: 5.5rem;
+}
+
+.marquee__item a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.marquee__item img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+/* No colour filter here. These are official University marks, and altering
+   their colour is normally a brand-guideline violation. */
+.marquee__item a:hover img,
+.marquee__item a:focus-visible img {
+  transform: scale(1.04);
+}
+
+/* Placeholder slots so the moving window is visible before any logo is added. */
+.marquee__item--empty {
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  color: var(--muted);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+  }
+  /* With no motion the duplicate group is dead weight, so hide it and let the
+     single row scroll by hand instead. */
+  .marquee {
+    overflow-x: auto;
+  }
+  .marquee__group[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Desktop: sidebar and content side by side
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 51rem) {
+  .layout {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    width: var(--sidebar-w);
+    height: 100vh;
+    height: 100dvh;
+    position: sticky;
+    top: 0;
+    padding: 2.25rem 1.4rem 1.75rem;
+    overflow-y: auto;
+  }
+
+  .sidebar__inner {
+    min-height: 100%;
+    gap: 1.75rem;
+  }
+
+  /* Push contact + socials to the bottom of the rail. */
+  .sidebar__meta {
+    margin-top: auto;
+  }
+
+  .content {
+    padding: 4rem 3.5rem 5rem;
+  }
+
+  .site-footer {
+    text-align: left;
+    padding: 1.5rem 3rem 2.5rem;
+  }
+}
+
+@media print {
+  .sidebar {
+    display: none;
+  }
+  .content {
+    max-width: none;
+  }
+}

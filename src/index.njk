@@ -1,0 +1,153 @@
+---
+layout: base.njk
+permalink: /
+pageDescription: >-
+  The Geospatial Science Student Association is a student-led organization at
+  Saint Louis University, affiliated with the Geospatial Center. Membership is
+  free and open to all SLU students.
+---
+
+<div class="home-cols">
+  <div class="home-cols__main">
+
+<section class="section" id="about">
+  <div class="section__head"><h2>{{ home.aboutHeading }}</h2></div>
+  {{ home.aboutBody | md | safe }}
+</section>
+
+{# No big section heading — the document's own bar carries the label. The
+   heading text still names the section for screen readers via aria-label, so
+   the section is not left anonymous just because nothing is drawn. #}
+<section class="section" id="bylaws" aria-label="{{ home.bylawsHeading }}">
+  {% if home.bylawsNote %}
+    <p class="section__note">{{ home.bylawsNote }}</p>
+  {% endif %}
+
+  <div class="doc">
+    {% if home.bylawsFile %}
+      <div class="doc__bar">
+        {% if home.bylawsHeading %}
+          <span class="doc__name">{{ home.bylawsHeading }}</span>
+        {% endif %}
+        <a class="doc__open" href="{{ home.bylawsFile }}" target="_blank" rel="noopener">
+          Open in a new tab
+        </a>
+      </div>
+      {# <object> keeps a real fallback for browsers with no built-in viewer. #}
+      <object class="doc__frame" data="{{ home.bylawsFile }}" type="application/pdf">
+        <p class="doc__fallback">
+          Your browser cannot display PDFs inline.
+          <a href="{{ home.bylawsFile }}">Download the PDF</a>.
+        </p>
+      </object>
+    {% else %}
+      <div class="doc__frame doc__frame--empty">
+        <p>{{ home.bylawsEmpty }}</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+  </div><!-- /.home-cols__main -->
+
+  <aside class="home-cols__rail" aria-label="{{ home.newsHeading }}">
+    <div class="rail" id="news">
+      <div class="rail__head"><h2>{{ home.newsHeading }}</h2></div>
+
+  {% if collections.news | length %}
+    <ul class="news news--rail">
+      {% for item in collections.news | limit(10) %}
+        <li class="news__item">
+          <div class="news__date">
+            <time datetime="{{ item.date | isoDate }}">{{ item.date | newsDate }}</time>
+          </div>
+          <div>
+            <h3 class="news__title">{{ item.data.title }}</h3>
+            <div class="news__body">{{ item.data.body | md | safe }}</div>
+
+            {% if item.data.image %}
+              <img
+                class="news__img"
+                src="{{ item.data.image }}"
+                alt="{{ item.data.imageAlt or item.data.title }}"
+                loading="lazy"
+              />
+            {% endif %}
+
+            {% if item.data.links | length %}
+              <div class="news__links">
+                {% for link in item.data.links %}
+                  <a href="{{ link.url }}">{{ link.label }}</a>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <p class="news__more">
+      <a href="/news/">{{ home.newsArchiveLabel }} ({{ collections.news | length }})</a>
+    </p>
+  {% else %}
+    <p>{{ home.newsEmpty }}</p>
+  {% endif %}
+
+    </div>
+  </aside>
+</div><!-- /.home-cols -->
+
+<section class="section" id="supporters">
+  <div class="section__head">
+    <h2>{{ home.supportersHeading }}</h2>
+    {% if home.supportersNote %}
+      <p class="section__note">{{ home.supportersNote }}</p>
+    {% endif %}
+  </div>
+
+  {# The track is rendered twice so the scroll loops with no visible seam. The
+     second copy is hidden from screen readers to avoid duplicate names. #}
+  <div class="marquee">
+    <div class="marquee__track">
+      {% for pass in [1, 2] %}
+        <ul class="marquee__group" {% if pass == 2 %}aria-hidden="true"{% endif %}>
+          {% if home.supporters | length %}
+            {# With only a couple of logos one group is narrower than the page,
+               which leaves a visible gap before the loop repeats. Repeat the
+               set until the group is comfortably wider than any screen. Only
+               the very first copy carries alt text; the rest are decorative
+               duplicates and would otherwise be announced over and over. #}
+            {% for rep in [1, 2, 3, 4, 5] %}
+              {% for logo in home.supporters %}
+                <li class="marquee__item">
+                  {% if logo.url %}<a href="{{ logo.url }}" target="_blank" rel="noopener"{% if not (pass == 1 and rep == 1) %} tabindex="-1" aria-hidden="true"{% endif %}>{% endif %}
+                  <img src="{{ logo.image }}" alt="{% if pass == 1 and rep == 1 %}{{ logo.name }}{% endif %}" loading="lazy" />
+                  {% if logo.url %}</a>{% endif %}
+                </li>
+              {% endfor %}
+            {% endfor %}
+          {% else %}
+            {# Placeholder slots so the moving window is visible before any
+               logo is added in the CMS. #}
+            {% for i in range(0, 6) %}
+              <li class="marquee__item marquee__item--empty">
+                <span>Logo</span>
+              </li>
+            {% endfor %}
+          {% endif %}
+        </ul>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="callout">
+    <h3>{{ home.ctaHeading }}</h3>
+    {{ home.ctaBody | md | safe }}
+    <div class="btn-row">
+      <a class="btn btn--primary" href="/membership/">{{ home.ctaButton }}</a>
+      <a class="btn btn--ghost" href="/board/">{{ home.ctaButtonSecondary }}</a>
+    </div>
+  </div>
+</section>

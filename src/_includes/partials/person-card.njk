@@ -1,0 +1,87 @@
+{#
+  One person on the Executive Board page.
+  Expects a `person` variable (an item from `collections.board`).
+
+  Layout follows the CTrees team pattern: circular grayscale headshot, bold
+  name, muted role underneath, and the bio tucked behind a disclosure so the
+  grid stays scannable. Built on <details>/<summary> so it works with the
+  keyboard and without JavaScript.
+
+  Everything degrades: no photo shows a monogram, no bio drops the disclosure
+  entirely rather than offering an arrow that opens nothing.
+
+  Note: the shared markup is captured with {% set %}…{% endset %} rather than a
+  macro. Nunjucks macros do not inherit the surrounding loop variable, so
+  `person` reads as undefined inside one.
+#}
+
+{% set hasDetail = person.data.bio or person.data.email or person.data.pronunciation %}
+{% set displayName = person.data.name or "To be announced" %}
+
+{% set cardFace %}
+  {% if person.data.photo %}
+    <img
+      class="person__photo"
+      src="{{ person.data.photo }}"
+      alt="{{ displayName }}"
+      width="130"
+      height="130"
+      loading="lazy"
+    />
+  {% else %}
+    <span class="person__photo person__photo--empty" role="img"
+          aria-label="No photo available for {{ displayName }}">
+      {% include "partials/avatar-icon.njk" %}
+    </span>
+  {% endif %}
+
+  <span class="person__name">{{ displayName }}</span>
+  <span class="person__role{% if person.data.isAdvisor %} person__role--advisor{% endif %}">
+    {{ person.data.role }}
+  </span>
+  {% if person.data.program %}
+    <span class="person__program">{{ person.data.program }}</span>
+  {% endif %}
+{% endset %}
+
+{% if hasDetail %}
+  <details class="person">
+    <summary class="person__summary">
+      {{ cardFace | safe }}
+      <span class="person__toggle">
+        <span class="person__toggle-text">Read bio</span>
+        <svg class="person__caret" viewBox="0 0 20 13" aria-hidden="true">
+          <path d="M17.65 0L10 7.63333L2.35 0L0 2.35L10 12.35L20 2.35L17.65 0Z" />
+        </svg>
+      </span>
+    </summary>
+
+    <div class="person__panel">
+      {% if person.data.pronunciation %}
+        <p class="person__pron">
+          <span class="person__pron-label">Pronounced</span>
+          {{ person.data.pronunciation }}
+        </p>
+      {% endif %}
+
+      {% if person.data.bio %}
+        <div class="person__bio">{{ person.data.bio | md | safe }}</div>
+      {% endif %}
+
+      {% if person.data.email or person.data.officeHours %}
+        <p class="person__contact">
+          {% if person.data.email %}
+            <a href="mailto:{{ person.data.email }}">{{ person.data.email }}</a><br />
+          {% endif %}
+          {% if person.data.officeHours %}
+            <span>Office hours: {{ person.data.officeHours }}</span>
+          {% endif %}
+        </p>
+      {% endif %}
+    </div>
+  </details>
+{% else %}
+  <article class="person person--static">
+    <div class="person__summary">{{ cardFace | safe }}</div>
+  </article>
+{% endif %}

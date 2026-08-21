@@ -1,0 +1,21 @@
+{
+  "orgName": "Geospatial Science Student Association",
+  "shortName": "GSSA",
+  "institution": "Saint Louis University",
+  "description": "A student-led organization at Saint Louis University advancing the understanding and application of geospatial science and technology.",
+  "url": "https://gssa-slu.github.io",
+  "currentTerm": "2026-2027",
+  "foundedYear": "2026",
+  "membershipFormUrl": "",
+  "contactEmail": "",
+  "center": {
+    "name": "Geospatial Center at Saint Louis University",
+    "url": "https://www.slu.edu/geospatial",
+    "address": "Des Peres Hall, Room 203 · 3694 West Pine Mall · St. Louis, MO 63108"
+  },
+  "social": {
+    "instagram": "",
+    "linkedin": "",
+    "github": ""
+  }
+}

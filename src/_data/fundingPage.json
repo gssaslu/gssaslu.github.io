@@ -1,0 +1,35 @@
+{
+  "title": "Funding & Awards",
+  "intro": "When demand may exceed what is available, GSSA uses a fair and documented selection process — and publishes the rules before applications open.",
+  "policyHeading": "How GSSA distributes limited opportunities",
+  "policyBody": "Before applications open for any voucher, registration, membership, travel assistance or award, GSSA publishes the eligibility requirements, the quantity available, the application method and deadline, the decision timeline, and the selection criteria.\n\nApplicants may not help develop criteria, review applications, score applicants or approve a selection. Every selection is made by at least three non-applicant reviewers. Executive Board service creates no priority — an officer may apply only with complete recusal.",
+  "policyReference": "GSSA Bylaws Art. VIII, Section 4 (8.12–8.18).",
+  "awardsHeading": "GSSA opportunities",
+  "awardsEmpty": "No GSSA opportunities are open right now. Watch this page and our announcements — new opportunities are posted here first.",
+  "recipientsHeading": "Recipients",
+  "recipientsNote": "Students who have received GSSA-administered opportunities.",
+  "externalHeading": "Other funding you are eligible for",
+  "externalNote": "GSSA members are graduate and undergraduate students at SLU, so these university-wide sources are open to you as well.",
+  "external": [
+    {
+      "title": "GSA Professional Development Award",
+      "url": "https://www.slu.edu/graduate-student-association/what-are-you-looking-for-today/funding-awards/professional-development-awards",
+      "description": "Up to $550 per graduate student per fiscal year toward conference registration, travel, lodging and other professional development. Apply within 30 days after the event."
+    },
+    {
+      "title": "GSA Graduate Initiative Fund",
+      "url": "https://www.slu.edu/graduate-student-association/what-are-you-looking-for-today/funding-awards/graduate-initiative-fund",
+      "description": "Funding for graduate student initiatives and events."
+    },
+    {
+      "title": "GSA Publication Awards",
+      "url": "https://www.slu.edu/graduate-student-association/what-are-you-looking-for-today/funding-awards/publicationawards",
+      "description": "Recognition and funding for published graduate research."
+    },
+    {
+      "title": "Graduate Research Symposium",
+      "url": "https://www.slu.edu/graduate-student-association/what-are-you-looking-for-today/symposium",
+      "description": "SLU's annual research showcase with oral and poster prizes across four disciplinary tracks. Geospatial research fits the Physical and Social Sciences categories."
+    }
+  ]
+}

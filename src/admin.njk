@@ -1,0 +1,217 @@
+---
+layout: base.njk
+permalink: /admin/
+title: Editor Guide
+noindex: true
+pageDescription: How GSSA officers update this website. No coding required.
+---
+
+<div class="page-head">
+  <span class="eyebrow">Officers only</span>
+  <h1>Update this website</h1>
+  <p class="page-head__sub">
+    Everything on this site — every headline, paragraph, photo, news item,
+    officer and funding opportunity — is edited through a web form. You never
+    touch code, and you cannot break the site.
+  </p>
+</div>
+
+<div class="admin-launch">
+  <div>
+    <h2>Open the editor</h2>
+    <p>
+      Sign in with GitHub, pick the <strong>gssa-website</strong> repository,
+      and you will see the whole site laid out as editable sections.
+    </p>
+    <a class="btn btn--primary" href="{{ admin.editorUrl }}" rel="noopener">
+      Open the GSSA editor →
+    </a>
+  </div>
+</div>
+
+{% if admin.note %}
+  <p class="ref" style="margin-top: 1rem;">{{ admin.note }}</p>
+{% endif %}
+
+<div class="callout" style="margin-top: 2rem;">
+  <h3>Before you start: never publish private information here</h3>
+  <p>
+    This website is public, and so is the repository behind it. The
+    <strong>membership roster, meeting minutes, officer applications, budgets
+    and scoring records must never be entered here.</strong> They stay in the
+    officers' SLU Google Workspace.
+  </p>
+  <p>
+    Photos of people need that person's permission before you upload them.
+  </p>
+  <p class="ref">GSSA Bylaws Art. IX, Section 1 (9.3).</p>
+</div>
+
+<section class="section">
+  <div class="section__head">
+    <h2>What you can change</h2>
+    <p class="section__note">
+      Each of these is a section in the editor's left-hand menu.
+    </p>
+  </div>
+
+  <div class="admin-tasks">
+    <article class="admin-task">
+      <h3>News</h3>
+      <p class="admin-task__what">
+        The dated list on the home page.
+      </p>
+      <p>
+        Click <strong>News → Add an entry</strong>. Give it a title, pick the
+        date, and write the announcement in the text box — it works like a
+        normal document, with bold, links and lists. You can attach a photo and
+        add “read more” links.
+      </p>
+      <p class="admin-task__tip">
+        Newest items appear at the top automatically. To take something down,
+        delete the entry.
+      </p>
+    </article>
+
+    <article class="admin-task">
+      <h3>Executive Board</h3>
+      <p class="admin-task__what">
+        The officer cards on the Executive Board page.
+      </p>
+      <p>
+        Click <strong>Board Members</strong> to edit a card — name, how to
+        pronounce it, role, program, photo, email and office hours. Drag a photo
+        straight into the photo box; any shape works, because it is
+        centre-cropped into a circle for you. Officers without a photo show a
+        neutral circle, so the page still looks finished while you collect them.
+        The bio sits behind a &ldquo;Read bio&rdquo; link, which keeps the grid
+        tidy.
+      </p>
+      <p class="admin-task__tip">
+        <strong>At the end of the year:</strong> add an entry for each new
+        officer with the new term (for example <code>2027-2028</code>), then
+        open <strong>Site Settings</strong> and change
+        <strong>Current term</strong> to match. Last year's board moves into
+        “Past Boards” by itself. Do not delete anyone — the archive is the
+        record.
+      </p>
+    </article>
+
+    <article class="admin-task">
+      <h3>Funding &amp; Awards</h3>
+      <p class="admin-task__what">
+        Opportunities and their published terms.
+      </p>
+      <p>
+        Click <strong>Funding Opportunities → Add an entry</strong>. Set the
+        status to <em>Open</em>, <em>Coming soon</em> or <em>Closed</em>, then
+        fill in eligibility, how many are available, how to apply, the deadline,
+        when decisions come, and the selection criteria.
+      </p>
+      <p class="admin-task__tip">
+        Anything you leave blank shows publicly as “To be published before
+        applications open.” The bylaws require all six to be filled in
+        <em>before</em> you start taking applications.
+      </p>
+    </article>
+
+    <article class="admin-task">
+      <h3>Recipients</h3>
+      <p class="admin-task__what">
+        The photo gallery of students who received an opportunity.
+      </p>
+      <p>
+        Click <strong>Award Recipients → Add an entry</strong>. Add the
+        student's name, which award, the term, a photo and a short note. Ask
+        permission before posting anyone's photo or name.
+      </p>
+    </article>
+
+    <article class="admin-task">
+      <h3>Page text</h3>
+      <p class="admin-task__what">
+        The wording on every page.
+      </p>
+      <p>
+        <strong>Home Page</strong>, <strong>Board Page</strong>,
+        <strong>Funding Page</strong> and <strong>Membership Page</strong> each
+        contain the headings and paragraphs for that page. Rewrite anything you
+        like. The “What we do” tiles on the home page are a list you can add to,
+        remove from or reorder.
+      </p>
+    </article>
+
+    <article class="admin-task">
+      <h3>Site Settings</h3>
+      <p class="admin-task__what">
+        Things that apply everywhere.
+      </p>
+      <p>
+        Contact email, social media links, the current term, and the
+        <strong>membership form link</strong>.
+      </p>
+      <p class="admin-task__tip">
+        Paste the membership form link here and the Membership page will show
+        the form <em>and</em> generate a matching QR code automatically. The QR
+        code can never point at the wrong form, because it is built from this
+        one field.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>How saving works</h2></div>
+  <ol class="steps">
+    <li>
+      <strong>You click Save in the editor.</strong> Your change is recorded
+      with your name and the date.
+    </li>
+    <li>
+      <strong>The site rebuilds itself.</strong> This takes about a minute — no
+      action needed from you.
+    </li>
+    <li>
+      <strong>Refresh the page to see it live.</strong> If it has not appeared
+      after a few minutes, check the Actions tab in the repository.
+    </li>
+  </ol>
+
+  <div class="callout callout--info">
+    <h3>You cannot lose anything</h3>
+    <p>
+      Every save is stored permanently. If something is deleted or a page ends
+      up looking wrong, any previous version can be restored — including work
+      from officers who left years ago. Nothing you do in the editor is
+      unrecoverable.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head">
+    <h2>Handing over to the next board</h2>
+    <p class="section__note">
+      Outgoing officers transfer access within ten business days of the end of
+      their term — Bylaws Art. IX, 9.8.
+    </p>
+  </div>
+  <ol class="steps">
+    <li>
+      <strong>Add the incoming officers</strong> to the GSSA GitHub
+      organization, and give them the editor link on this page.
+    </li>
+    <li>
+      <strong>Add their board entries</strong> and update the current term, as
+      described above.
+    </li>
+    <li>
+      <strong>Remove departing officers</strong> from the organization once the
+      new board can sign in and save successfully.
+    </li>
+    <li>
+      <strong>Confirm the recovery email</strong> on the GitHub organization is
+      a GSSA address, not any individual's personal account.
+    </li>
+  </ol>
+</section>

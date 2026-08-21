@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{% if title %}{{ title }} · {{ site.shortName }}{% else %}{{ site.shortName }} · {{ site.orgName }}{% endif %}</title>
+    <meta name="description" content="{{ pageDescription or site.description }}" />
+    {% if noindex %}<meta name="robots" content="noindex, nofollow" />{% endif %}
+
+    <meta property="og:site_name" content="{{ site.shortName }} · {{ site.institution }}" />
+    <meta property="og:title" content="{% if title %}{{ title }} · {{ site.shortName }}{% else %}{{ site.orgName }}{% endif %}" />
+    <meta property="og:description" content="{{ pageDescription or site.description }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ site.url }}{{ page.url }}" />
+    <meta property="og:image" content="{{ site.url }}/assets/img/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
+    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
+    <!-- Space Grotesk for headings, Ubuntu Sans for text. preconnect shaves a round
+         trip off the handshake; if Google Fonts is unreachable the stylesheet
+         simply does not apply and the system stack takes over. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Ubuntu+Sans:wght@300..700&display=swap"
+    />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="layout">
+      {% include "partials/sidebar.njk" %}
+
+      <div class="main{% if page.url == "/" %} main--home{% endif %}">
+        {% if page.url == "/" %}{% include "partials/hero.njk" %}{% endif %}
+
+        <main class="content" id="main">
+          {{ content | safe }}
+        </main>
+
+        <footer class="site-footer">
+          <p class="site-footer__contact">
+            {{ site.institution }} · {{ site.center.address }}{% if site.contactEmail %} ·
+            <a href="mailto:{{ site.contactEmail }}">{{ site.contactEmail }}</a>{% endif %}
+          </p>
+          <p>
+            &copy; {% year %} {{ site.orgName }} at {{ site.institution }}.
+            Affiliated with the
+            <a href="{{ site.center.url }}">{{ site.center.name }}</a>.
+          </p>
+          <p>
+            GSSA is a student-led organization. It does not speak for, or bind,
+            Saint Louis University or the Geospatial Center.
+          </p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="/assets/js/network.js" defer></script>
+    {% if pageScript %}<script src="{{ pageScript }}" defer></script>{% endif %}
+  </body>
+</html>

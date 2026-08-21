@@ -1,0 +1,107 @@
+---
+layout: base.njk
+permalink: /board/
+title: Executive Board
+pageScript: /assets/js/bio-drawer.js
+pageDescription: >-
+  The GSSA Executive Board — President, Secretary, Vice President of Finance and
+  Vice President of Communications — plus the Faculty Advisor.
+---
+
+<div class="page-head">
+  <span class="eyebrow">{{ site.currentTerm | replace("-", "–") }}</span>
+  <h1>{{ boardPage.title }}</h1>
+  <p class="page-head__sub">{{ boardPage.intro }}</p>
+</div>
+
+{% set current = collections.board | where("term", site.currentTerm) %}
+{% set officers = current | where("isAdvisor", false) %}
+{% set advisors = current | where("isAdvisor", true) %}
+
+<section>
+  <div class="people">
+    {% for person in officers %}
+      {% include "partials/person-card.njk" %}
+    {% endfor %}
+  </div>
+</section>
+
+{% if advisors | length %}
+  <section class="section">
+    <div class="section__head">
+      <h2>{{ boardPage.advisorHeading }}</h2>
+      {% if boardPage.advisorNote %}
+        <p class="section__note">{{ boardPage.advisorNote }}</p>
+      {% endif %}
+    </div>
+    <div class="people">
+      {% for person in advisors %}
+        {% include "partials/person-card.njk" %}
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+
+{% set pastTerms = collections.boardTerms | without(site.currentTerm) %}
+{% if pastTerms | length %}
+  <section class="section">
+    <div class="section__head">
+      <h2>{{ boardPage.archiveHeading }}</h2>
+      {% if boardPage.archiveNote %}
+        <p class="section__note">{{ boardPage.archiveNote }}</p>
+      {% endif %}
+    </div>
+
+    {% for term in pastTerms %}
+      {% set members = collections.board | where("term", term) %}
+      <details class="archive">
+        <summary>{{ term | replace("-", "–") }} Executive Board</summary>
+        <div class="archive__body">
+          <ul class="roster">
+            {% for person in members %}
+              <li>
+                <span class="roster__role">{{ person.data.role }}</span>
+                <span>{{ person.data.name or "Vacant" }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </details>
+    {% endfor %}
+  </section>
+{% endif %}
+
+{% if boardPage.electionsBody %}
+  <section class="section">
+    <div class="callout callout--info">
+      <h3>{{ boardPage.electionsHeading }}</h3>
+      {{ boardPage.electionsBody | md | safe }}
+      {% if boardPage.electionsReference %}
+        <p class="ref">{{ boardPage.electionsReference }}</p>
+      {% endif %}
+    </div>
+  </section>
+{% endif %}
+
+{#
+  One drawer, reused for every officer. Because it is a single <dialog> opened
+  with showModal(), two bios can never be open at once — that is a property of
+  the markup, not something the script has to enforce.
+
+  Hidden entirely when JavaScript is unavailable; the inline <details> panels
+  take over in that case.
+#}
+<dialog class="bio-drawer" id="bio-drawer" aria-label="Biography">
+  <button
+    type="button"
+    class="bio-drawer__close"
+    aria-label="Close biography"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.3 19.71 2.89 18.3 9.18 12 2.89 5.71 4.3 4.3l6.29 6.29 6.3-6.29z" />
+    </svg>
+  </button>
+
+  <div class="bio-drawer__media"></div>
+  <div class="bio-drawer__body"></div>
+</dialog>

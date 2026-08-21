@@ -1,0 +1,19 @@
+{
+  "name": "gssa-website",
+  "version": "1.0.0",
+  "description": "Website for the Geospatial Science Student Association at Saint Louis University",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "eleventy --serve",
+    "start:lan": "eleventy --serve --port=3000",
+    "build": "eleventy",
+    "clean": "node -e \"fs.rmSync('_site',{recursive:true,force:true})\""
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "markdown-it": "^14.1.0",
+    "qrcode": "^1.5.4"
+  }
+}

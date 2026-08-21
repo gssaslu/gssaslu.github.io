@@ -1,0 +1,96 @@
+---
+layout: base.njk
+permalink: /funding/
+title: Funding & Awards
+pageDescription: >-
+  Conference vouchers, travel assistance and other limited opportunities
+  available to GSSA members, with eligibility and selection criteria published
+  before applications open.
+---
+
+<div class="page-head">
+  <h1>{{ fundingPage.title }}</h1>
+  <p class="page-head__sub">{{ fundingPage.intro }}</p>
+</div>
+
+{% if fundingPage.policyBody %}
+  <div class="callout callout--info">
+    <h3>{{ fundingPage.policyHeading }}</h3>
+    {{ fundingPage.policyBody | md | safe }}
+    {% if fundingPage.policyReference %}
+      <p class="ref">{{ fundingPage.policyReference }}</p>
+    {% endif %}
+  </div>
+{% endif %}
+
+<section class="section">
+  <div class="section__head"><h2>{{ fundingPage.awardsHeading }}</h2></div>
+
+  {% if collections.awards | length %}
+    {% for award in collections.awards %}
+      {% include "partials/award-card.njk" %}
+    {% endfor %}
+  {% else %}
+    <p>{{ fundingPage.awardsEmpty }}</p>
+  {% endif %}
+</section>
+
+{% if collections.recipients | length %}
+  <section class="section">
+    <div class="section__head">
+      <h2>{{ fundingPage.recipientsHeading }}</h2>
+      {% if fundingPage.recipientsNote %}
+        <p class="section__note">{{ fundingPage.recipientsNote }}</p>
+      {% endif %}
+    </div>
+
+    <div class="recipients">
+      {% for person in collections.recipients %}
+        <article class="recipient">
+          {% if person.data.photo %}
+            <img
+              class="recipient__photo"
+              src="{{ person.data.photo }}"
+              alt="{{ person.data.name }}"
+              width="92"
+              height="92"
+              loading="lazy"
+            />
+          {% else %}
+            <span class="recipient__photo recipient__photo--empty" role="img"
+                  aria-label="No photo available for {{ person.data.name }}">
+              {% include "partials/avatar-icon.njk" %}
+            </span>
+          {% endif %}
+          <h3 class="recipient__name">{{ person.data.name }}</h3>
+          <p class="recipient__award">
+            {{ person.data.award }}{% if person.data.term %} · {{ person.data.term }}{% endif %}
+          </p>
+          {% if person.data.note %}
+            <p class="recipient__note">{{ person.data.note }}</p>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+
+{% if fundingPage.external | length %}
+  <section class="section">
+    <div class="section__head">
+      <h2>{{ fundingPage.externalHeading }}</h2>
+      {% if fundingPage.externalNote %}
+        <p class="section__note">{{ fundingPage.externalNote }}</p>
+      {% endif %}
+    </div>
+
+    <div class="grid">
+      {% for item in fundingPage.external %}
+        <div class="feature">
+          <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+          <p>{{ item.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}

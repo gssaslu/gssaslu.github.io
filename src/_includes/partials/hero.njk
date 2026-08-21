@@ -1,0 +1,17 @@
+{# Full-bleed banner. Rendered as a direct child of .main rather than inside
+   .content so it spans the whole column — a banner inset by the content
+   padding leaves white gaps at the top and sides. #}
+<div class="hero">
+  {% if home.heroImage %}
+    <img
+      class="hero__img"
+      src="{{ home.heroImage }}"
+      alt="{{ home.heroImageAlt or site.institution }}"
+    />
+  {% else %}
+    {# Placeholder until an officer uploads a campus photo in the CMS. #}
+    <div class="hero__img hero__img--empty" role="img" aria-label="Campus photo not uploaded yet">
+      <span>Campus photo</span>
+    </div>
+  {% endif %}
+</div>

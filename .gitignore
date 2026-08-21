@@ -1,0 +1,48 @@
+# ---------------------------------------------------------------------------
+# PRIVACY GUARD — do not remove.
+#
+# This repository starts PRIVATE, and becomes PUBLIC when the site is
+# published (free GitHub Pages on an organization requires a public repo).
+# Treat it as public from day one.
+# GSSA Bylaws Art. IX 9.3 restricts records containing private student
+# information to those with a legitimate organizational need.
+#
+# The membership roster, meeting minutes, officer applications, budgets and
+# scoring rubrics must NEVER be committed here. They live in the officers'
+# SLU Google Workspace, owned by the Secretary and VP of Finance.
+# ---------------------------------------------------------------------------
+docs/
+../docs/
+*.docx
+*.xlsx
+*.xlsm
+*.pdf
+roster*
+members*
+applications*
+
+# ...but the governing documents are meant to be published. The blanket *.pdf
+# rule above would otherwise silently drop the bylaws and the Bylaws section
+# on the home page would fall back to its "not uploaded yet" placeholder.
+!src/media/*.pdf
+
+# Full-size originals kept on disk for re-editing. The site serves the resized
+# copies; committing a 4-5 MB source would sit in git history permanently.
+src/assets/img/slu_campus_2.jpg
+
+# Build output
+_site/
+
+# Dependencies
+node_modules/
+
+# Environment / editor
+.env
+.env.*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+npm-debug.log*
+.eleventy-cache/
