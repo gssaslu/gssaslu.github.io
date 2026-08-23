@@ -12,7 +12,7 @@ pageDescription: >-
 
 <section class="section" id="about">
   <div class="section__head"><h2>{{ home.aboutHeading }}</h2></div>
-  {{ home.aboutBody | md | safe }}
+  <div class="prose prose--fluid">{{ home.aboutBody | md | safe }}</div>
 </section>
 
 {# No big section heading — the document's own bar carries the label. The

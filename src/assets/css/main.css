@@ -56,7 +56,10 @@
   /* Vertical rhythm */
   --flow: 1.15em;
   --space-section: clamp(2.75rem, 2rem + 2.5vw, 4rem);
-  --measure: 68ch;
+  /* The longest line prose is allowed to run. Past roughly this point the eye
+     starts landing on the wrong line coming back from the right margin. One
+     value, applied everywhere prose appears. */
+  --measure: 85ch;
 
   --radius: 12px;
   --radius-lg: 16px;
@@ -524,10 +527,11 @@ hr {
 .content {
   flex-grow: 1;
   width: 100%;
-  /* Wide enough that a left-aligned column still reaches most of the way
-     across a large screen — a 76rem cap left the right third of every page
-     empty. Prose is unaffected either way: paragraphs cap at --measure. */
-  max-width: 88rem;
+  /* No cap: the column fills whatever the window gives it. Readability is
+     already handled a level down — paragraphs stop at --measure no matter how
+     wide this gets — so the extra room goes to cards, tables and grids, which
+     are the things that actually benefit from it. */
+  max-width: none;
   padding: 2.5rem 1.5rem 3.5rem;
   /* Left-aligned, not centred: the column starts where the sidebar ends, so
      the eye returns to the same left edge on every page. Centring it inside a
@@ -605,7 +609,11 @@ hr {
   font-weight: 350;
   color: var(--muted);
   margin: 0;
-  max-width: 46ch;
+  /* Shorter than the 80ch prose measure on purpose: this is set larger and
+     lighter than body text, and large type needs a shorter line before the eye
+     starts losing its place on the return sweep. Widened from 46ch only
+     because the whole scale grew around it. */
+  max-width: 58ch;
   letter-spacing: -0.008em;
 }
 
@@ -798,7 +806,8 @@ hr {
 .grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 22rem));
+  justify-content: start;
 }
 
 .feature {
@@ -968,11 +977,12 @@ hr {
      52rem column and left two empty tracks once the column widened, squeezing
      every card. auto-fill, not auto-fit: the advisor grid holds one card and
      auto-fit would stretch it across the whole row. */
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 18rem));
   /* Stretch, not start: names and programs wrap to different depths, so the
      cards are made equal height and the "read bio" links pinned to a shared
      baseline. Ragged link heights read as sloppy. */
   align-items: stretch;
+  justify-content: start;
 }
 
 .person {
@@ -1576,6 +1586,10 @@ details.person > summary:focus-visible {
   background: #fff;
   box-shadow: var(--shadow-sm);
   transition: box-shadow 0.2s ease;
+  /* Sized so the text inside reaches the card's own edge. A card IS a measure —
+     once it is bounded, capping the paragraphs inside it as well just prints a
+     second, invisible margin within the first. */
+  max-width: 58rem;
 }
 
 .award:hover {
@@ -1675,7 +1689,8 @@ details.person > summary:focus-visible {
 .recipients {
   display: grid;
   gap: 1.25rem;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 18rem));
+  justify-content: start;
 }
 
 .recipient {
@@ -1901,6 +1916,19 @@ details.person > summary:focus-visible {
   fill: var(--blue);
 }
 
+/* Prose inside a bounded box fills that box. The box already limits the line;
+   --measure on top of it only leaves dead space against the right edge. */
+.award p,
+.award li,
+.callout p,
+.callout li,
+.feature p,
+.person__bio p,
+.disclosure td,
+.disclosure th {
+  max-width: none;
+}
+
 /* --------------------------------------------------------------------------
    Events
    -------------------------------------------------------------------------- */
@@ -1965,7 +1993,8 @@ details.person > summary:focus-visible {
 .event-grid {
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 24rem));
+  justify-content: start;
 }
 
 .event-card {
@@ -2047,10 +2076,39 @@ details.person > summary:focus-visible {
   background: var(--bg-alt);
 }
 
-/* Shared by event and announcement pages — both are a headline, a body and a
-   way back. */
+/* Shared by the About section and the event and announcement pages — anything
+   that is a run of real prose rather than a label or a caption.
+
+   Justified, which only works because hyphens are on: without them the browser
+   stretches word spacing to reach the right margin and tears pale rivers down
+   through the paragraph. */
 .prose {
   max-width: var(--measure);
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* No line limit at all: the block takes whatever width its column happens to
+   have, which on the home page is whatever is left once the news rail has had
+   its share. Used where the surrounding layout is already doing the job that
+   --measure normally does. */
+.prose--fluid,
+.prose--fluid p,
+.prose--fluid li {
+  max-width: none;
+}
+
+/* A last line pulled apart to full width is the one thing justification must
+   never do. */
+.prose p:last-child {
+  text-align: left;
+}
+
+@media (max-width: 34rem) {
+  /* Too few words per line for justification to find good break points. */
+  .prose {
+    text-align: left;
+  }
 }
 
 .post-links {
@@ -2070,7 +2128,7 @@ details.person > summary:focus-visible {
   padding: 0;
   display: grid;
   gap: 0.9rem;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 14rem));
 }
 
 .gallery__link {
@@ -2216,7 +2274,8 @@ details.person > summary:focus-visible {
   /* Wide enough that a two-word name — "Mustafizur Rahaman" — sits on one
      line. Narrower columns fit more faces per row but break most full names
      across two, which is what makes a roll call look ragged. */
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 14rem));
+  justify-content: start;
 }
 
 .member {
@@ -2293,6 +2352,7 @@ details.person > summary:focus-visible {
   padding: 1.4rem 1.6rem;
   margin: 1.75rem 0;
   box-shadow: var(--shadow-sm);
+  max-width: 58rem;
 }
 
 .callout > :last-child {
@@ -2819,8 +2879,11 @@ details.person > summary:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 11rem;
-  height: 5.5rem;
+  /* The slot, not the image, sets the size — logos are contained inside it, so
+     a wide wordmark and a square crest still occupy the same footprint and the
+     strip keeps an even rhythm. Grow the slot to grow every logo at once. */
+  width: 14rem;
+  height: 7rem;
 }
 
 .marquee__item a {
