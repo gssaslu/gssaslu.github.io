@@ -270,7 +270,10 @@ hr {
    navy rail. */
 .sidebar__logo {
   width: 100%;
-  max-width: 12rem;
+  /* The sidebar is 20rem with 1.4rem of padding either side, so 17.2rem is all
+     there is. 15rem fills most of it without crowding the edges — and keeps the
+     same proportion the mark had before the panel was widened. */
+  max-width: 15rem;
   height: auto;
   background: #fff;
   border-radius: var(--radius);
