@@ -1,0 +1,9 @@
+{
+  "eyebrow": "Error 404",
+  "title": "That page does not exist",
+  "body": "The link may be out of date, or the page may have moved.",
+  "primaryLabel": "Go to the home page",
+  "primaryUrl": "/",
+  "secondaryLabel": "Join GSSA",
+  "secondaryUrl": "/membership/"
+}

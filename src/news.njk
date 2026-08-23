@@ -1,50 +1,41 @@
 ---
 layout: base.njk
 permalink: /news/
-title: News
+eleventyComputed:
+  title: "{{ newsPage.title }}"
 pageDescription: >-
   Every GSSA announcement, newest first — meetings, workshops, guest speakers
   and funding opportunities.
 ---
 
 <div class="page-head">
-  <h1>{{ home.newsHeading }}</h1>
-  <p class="page-head__sub">Every announcement, newest first.</p>
+  <h1>{{ newsPage.title }}</h1>
 </div>
 
-<section>
-  {% if collections.news | length %}
-    <ul class="news">
-      {% for item in collections.news %}
-        <li class="news__item">
-          <div class="news__date">
+{% if collections.news | length %}
+  <ul class="news-list">
+    {% for item in collections.news %}
+      <li class="news-list__item">
+        <a class="news-list__link" href="{{ item.url }}">
+          <span class="news-list__date">
             <time datetime="{{ item.date | isoDate }}">{{ item.date | newsDate }}</time>
-          </div>
-          <div>
-            <h3 class="news__title">{{ item.data.title }}</h3>
-            <div class="news__body">{{ item.data.body | md | safe }}</div>
-
-            {% if item.data.image %}
-              <img
-                class="news__img"
-                src="{{ item.data.image }}"
-                alt="{{ item.data.imageAlt or item.data.title }}"
-                loading="lazy"
-              />
+          </span>
+          <span class="news-list__title">{{ item.data.title }}</span>
+          <span class="news-list__marks">
+            {% if item.data.attachments | length %}
+              <span class="news-list__mark">
+                {{ item.data.attachments | length }}
+                {{ newsPage.fileWordSingular if item.data.attachments | length == 1 else newsPage.fileWordPlural }}
+              </span>
             {% endif %}
-
-            {% if item.data.links | length %}
-              <div class="news__links">
-                {% for link in item.data.links %}
-                  <a href="{{ link.url }}">{{ link.label }}</a>
-                {% endfor %}
-              </div>
-            {% endif %}
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>{{ home.newsEmpty }}</p>
-  {% endif %}
-</section>
+          </span>
+          <svg class="news-list__arrow" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8.59 16.59 10 18l6-6-6-6-1.41 1.41L13.17 12z" />
+          </svg>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>{{ newsPage.empty }}</p>
+{% endif %}

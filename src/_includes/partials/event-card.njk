@@ -1,0 +1,57 @@
+{#
+  One event in the listing. Expects an `event` variable (an item from
+  collections.events) and, optionally, `upcoming` set to true.
+
+  Upcoming events are a line of text — there is nothing to show yet, and a
+  placeholder image where a photo will later go just reads as a broken promise.
+  Past events lead with their cover photo, because that is what makes someone
+  click.
+#}
+
+{% if upcoming %}
+  <li class="event-row">
+    <div class="event-row__when">
+      <time datetime="{{ event.date | isoDate }}">{{ event.date | longDate }}</time>
+    </div>
+    <div>
+      <h3 class="event-row__title">
+        <a href="{{ event.url }}">{{ event.data.title }}</a>
+      </h3>
+      {% if event.data.location %}
+        <p class="event-row__meta">{{ event.data.location }}</p>
+      {% endif %}
+    </div>
+  </li>
+{% else %}
+  <article class="event-card">
+    <a class="event-card__link" href="{{ event.url }}">
+      {% if event.data.cover %}
+        <img
+          class="event-card__img"
+          src="{{ event.data.cover }}"
+          alt="{{ event.data.coverAlt or event.data.title }}"
+          loading="lazy"
+        />
+      {% else %}
+        <span class="event-card__img event-card__img--empty" aria-hidden="true"></span>
+      {% endif %}
+
+      <div class="event-card__body">
+        <p class="event-card__meta">
+          <time datetime="{{ event.date | isoDate }}">{{ event.date | longDate }}</time>
+          {% if event.data.kind %} · {{ event.data.kind }}{% endif %}
+        </p>
+        <h3 class="event-card__title">{{ event.data.title }}</h3>
+        {% if event.data.location %}
+          <p class="event-card__where">{{ event.data.location }}</p>
+        {% endif %}
+        {% if event.data.photos | length %}
+          <p class="event-card__count">
+            {{ event.data.photos | length }}
+            {{ eventsPage.photoWordSingular if event.data.photos | length == 1 else eventsPage.photoWordPlural }}
+          </p>
+        {% endif %}
+      </div>
+    </a>
+  </article>
+{% endif %}

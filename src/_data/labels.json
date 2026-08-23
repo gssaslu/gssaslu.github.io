@@ -1,0 +1,16 @@
+{
+  "skipLink": "Skip to content",
+  "navLabel": "Main",
+  "noPhotoPrefix": "No photo available for",
+  "socialInstagram": "GSSA on Instagram",
+  "socialLinkedin": "GSSA on LinkedIn",
+  "socialGithub": "GSSA on GitHub",
+  "bioDrawerLabel": "Biography",
+  "bioDrawerAboutPrefix": "About",
+  "bioDrawerClose": "Close biography",
+  "lightboxLabel": "Photo",
+  "lightboxClose": "Close photo",
+  "lightboxPrev": "Previous photo",
+  "lightboxNext": "Next photo",
+  "lightboxPhotoAlt": "Event photo"
+}

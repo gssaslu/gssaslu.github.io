@@ -82,10 +82,10 @@ when their `term` matches `currentTerm` in `src/_data/site.json`. Everyone else
 is grouped under "Past Boards". Rolling over to a new year means adding the new
 officers and changing one field — never deleting anyone.
 
-**The QR code is generated at build time** from `membershipFormUrl` in Site
-Settings, the same field that drives the embedded form. A printed QR code
-therefore cannot point somewhere the site does not. Leave the field blank and the
-Membership page shows a "coming soon" panel instead.
+**The Membership Form button is one field.** It sends people to
+`membershipFormUrl` in Site Settings and nowhere else, so the form address is
+changed in one place rather than hunted through templates. It ships with a
+placeholder address — replace it before sharing the page.
 
 ## Things still to fill in
 

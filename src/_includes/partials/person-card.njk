@@ -30,7 +30,7 @@
     />
   {% else %}
     <span class="person__photo person__photo--empty" role="img"
-          aria-label="No photo available for {{ displayName }}">
+          aria-label="{{ labels.noPhotoPrefix }} {{ displayName }}">
       {% include "partials/avatar-icon.njk" %}
     </span>
   {% endif %}
@@ -49,7 +49,7 @@
     <summary class="person__summary">
       {{ cardFace | safe }}
       <span class="person__toggle">
-        <span class="person__toggle-text">Read bio</span>
+        <span class="person__toggle-text">{{ boardPage.readBioLabel }}</span>
         <svg class="person__caret" viewBox="0 0 20 13" aria-hidden="true">
           <path d="M17.65 0L10 7.63333L2.35 0L0 2.35L10 12.35L20 2.35L17.65 0Z" />
         </svg>
@@ -59,7 +59,7 @@
     <div class="person__panel">
       {% if person.data.pronunciation %}
         <p class="person__pron">
-          <span class="person__pron-label">Pronounced</span>
+          <span class="person__pron-label">{{ boardPage.pronunciationLabel }}</span>
           {{ person.data.pronunciation }}
         </p>
       {% endif %}

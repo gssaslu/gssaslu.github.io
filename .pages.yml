@@ -17,10 +17,12 @@ content:
   # NEWS — the dated list on the home page
   # -------------------------------------------------------------------------
   - name: news
-    label: News
+    label: Announcements
     description: >-
-      Announcements. The ten newest appear on the home page; every one of them
-      is listed on the News page.
+      Each announcement gets its own page, so it can carry the full detail,
+      files to download and links. The ten newest appear on the home page; the
+      Announcements page lists every one of them as a headline you click
+      through.
     type: collection
     path: src/content/news
     filename: "{year}-{month}-{day}-{primary}.md"
@@ -47,7 +49,10 @@ content:
       - name: body
         label: Announcement
         type: rich-text
-        description: Write it like an email. Bold, links and lists all work.
+        description: >-
+          The full notice — write as much as it needs. Bold, links and lists all
+          work. The opening line is also what shows in the link preview when the
+          announcement is shared.
       - name: image
         label: Photo (optional)
         type: image
@@ -57,11 +62,136 @@ content:
         type: string
         description: >-
           A short description of the photo for people using screen readers.
+      - name: quote
+        label: Quote (optional)
+        type: text
+        description: >-
+          Someone's own words — an award winner, a speaker, a member. Shown set
+          off from the announcement. Leave blank and nothing is added.
+      - name: quoteName
+        label: "Quote: who said it"
+        type: string
+      - name: quoteRole
+        label: "Quote: their title"
+        type: string
+        description: 'For example: Ph.D. Student, Geoinformatics'
+      - name: attachments
+        label: Attachments (optional)
+        type: object
+        list: true
+        description: >-
+          Files to download — a flyer, an agenda, a form. Never upload anything
+          holding student names or personal details.
+        fields:
+          - name: file
+            label: File
+            type: file
+            options:
+              categories: [document, image]
+          - name: label
+            label: What it is
+            type: string
+            description: 'For example: Meeting agenda (PDF)'
       - name: links
         label: Links (optional)
         type: object
         list: true
         description: Appear as [Label] under the announcement.
+        fields:
+          - name: label
+            label: Link text
+            type: string
+          - name: url
+            label: Web address
+            type: string
+
+  # -------------------------------------------------------------------------
+  # EVENTS — write-ups with photos. Each one gets its own shareable page.
+  # -------------------------------------------------------------------------
+  - name: events
+    label: Events
+    description: >-
+      Meetings, socials, workshops, outreach. Each event gets its own page with
+      its own web address, so you can paste the link straight into a group chat
+      or a social post. Upcoming and past sort themselves out from the date —
+      there is nothing to tick when an event is over.
+    type: collection
+    path: src/content/events
+    filename: "{year}-{month}-{day}-{primary}.md"
+    view:
+      fields: [title, date, kind]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Event name
+        type: string
+        required: true
+      - name: date
+        label: Date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+        description: >-
+          A date in the future puts this under "Coming up". Once the date has
+          passed it moves to "Recent events" on its own.
+      - name: location
+        label: Where
+        type: string
+        description: 'For example: Des Peres Hall 203, or Forest Park'
+      - name: kind
+        label: Kind of event
+        type: select
+        options:
+          values:
+            - Meeting
+            - Social
+            - Workshop
+            - Guest speaker
+            - Outreach
+            - Conference
+            - Field trip
+      - name: summary
+        label: Write-up
+        type: rich-text
+        description: >-
+          What happened, who came, what people got out of it. A paragraph or
+          two is plenty. This is also what shows in the link preview when the
+          page is shared.
+      - name: cover
+        label: Cover photo
+        type: image
+        description: >-
+          The one photo that represents the event. Shown at the top of the page
+          and on the card in the events list. Landscape works best.
+      - name: coverAlt
+        label: Cover photo description
+        type: string
+        description: A short description of the cover photo for screen readers.
+      - name: photos
+        label: Photo gallery
+        type: object
+        list: true
+        description: >-
+          Add as many as you like. They appear as a grid of thumbnails; clicking
+          one opens it full size with arrow keys to move through the rest.
+        fields:
+          - name: image
+            label: Photo
+            type: image
+          - name: caption
+            label: Caption
+            type: string
+            description: Optional, but it is also what screen readers announce.
+      - name: links
+        label: Links (optional)
+        type: object
+        list: true
+        description: Slides, a recording, the host's page.
         fields:
           - name: label
             label: Link text
@@ -268,6 +398,73 @@ content:
           format: yyyy-MM-dd
 
   # -------------------------------------------------------------------------
+  # MEMBERS — the people shown on the Membership page
+  # -------------------------------------------------------------------------
+  - name: members
+    label: Members
+    description: >-
+      The member cards on the Membership page. This is NOT the roster — the
+      roster is private and lives in the officers' Google Workspace. Only add
+      someone here after they have said yes, in writing, to their name and
+      photo being on a public website. Remove a card the moment they ask.
+    type: collection
+    path: src/content/members
+    filename: "{primary}.md"
+    view:
+      fields: [name, title, category]
+      primary: name
+      sort: [order, name, category]
+      default:
+        sort: order
+        order: asc
+    fields:
+      - name: name
+        label: Full name
+        type: string
+        required: true
+      - name: title
+        label: Title
+        type: string
+        description: >-
+          'For example: Ph.D. Student, Geoinformatics — or GIS Analyst, Missouri
+          Department of Conservation for an affiliate.'
+      - name: link
+        label: Profile link
+        type: string
+        description: >-
+          Optional. A LinkedIn profile, personal site or lab page. Fill this in
+          and the member's name becomes a link; leave it blank and the name is
+          plain text.
+      - name: category
+        label: Member category
+        type: select
+        required: true
+        default: student
+        options:
+          values:
+            - value: student
+              label: Student Member
+            - value: affiliate
+              label: Affiliate Member
+        description: >-
+          Student Members are enrolled SLU students. Affiliate Members are
+          faculty, staff, alumni and practitioners. Each appears under its own
+          heading on the Membership page.
+      - name: photo
+        label: Photo
+        type: image
+        description: >-
+          Optional. Any shape works — the photo is centre-cropped into a circle
+          automatically. Without one, a neutral "no photo" circle is shown.
+      - name: order
+        label: Display order
+        type: number
+        default: 50
+        description: >-
+          Lower numbers appear first. Leave everyone on the same number to list
+          them alphabetically.
+
+  # -------------------------------------------------------------------------
   # PAGE TEXT — the wording of each page
   # -------------------------------------------------------------------------
   - name: settings
@@ -308,9 +505,10 @@ content:
         label: Membership form link
         type: string
         description: >-
-          Paste the share link to your Google or Microsoft form. The Membership
-          page will embed the form AND build a matching QR code from it. Leave
-          blank to show a "coming soon" message instead.
+          Paste the share link to your Google or Microsoft form. This is where
+          the "Membership Form" button on the Membership page sends people. It
+          ships with a placeholder address that goes nowhere — replace it as
+          soon as the real form exists.
       - name: contactEmail
         label: Contact email
         type: string
@@ -383,6 +581,24 @@ content:
         description: >-
           Upload the bylaws as a PDF and it appears in a reader on the page.
           Leave empty and a placeholder box is shown instead.
+      - name: heroEmptyLabel
+        label: "Banner: text shown before a photo is uploaded"
+        type: string
+      - name: heroEmptyAlt
+        label: "Banner: description of the empty banner"
+        type: string
+      - name: docOpenLabel
+        label: "Bylaws section: \"open in a new tab\" link text"
+        type: string
+      - name: docFallback
+        label: "Bylaws section: text if the browser cannot show a PDF"
+        type: string
+      - name: docDownloadLabel
+        label: "Bylaws section: download link text"
+        type: string
+      - name: logoPlaceholder
+        label: "Supporters: text in an empty logo slot"
+        type: string
       - name: bylawsEmpty
         label: "Bylaws section: text when no PDF is uploaded"
         type: string
@@ -476,6 +692,12 @@ content:
       - name: electionsReference
         label: "Elections box: bylaws reference"
         type: string
+      - name: readBioLabel
+        label: "Officer card: bio link text"
+        type: string
+      - name: pronunciationLabel
+        label: "Officer card: pronunciation label"
+        type: string
 
   - name: funding_page
     label: Funding Page
@@ -516,6 +738,50 @@ content:
       - name: externalNote
         label: "Other funding: note"
         type: string
+      - name: awardLabels
+        label: "Award card: row labels"
+        type: object
+        description: >-
+          The words down the left of every funding card. Bylaws Art. VIII §8.13
+          names these six disclosures — rename them only if the bylaws are
+          amended to call them something else.
+        fields:
+          - name: eligibility
+            label: Eligibility row
+            type: string
+          - name: quantity
+            label: Quantity row
+            type: string
+          - name: applicationMethod
+            label: How to apply row
+            type: string
+          - name: deadline
+            label: Deadline row
+            type: string
+          - name: decisionTimeline
+            label: Decision timeline row
+            type: string
+          - name: selectionCriteria
+            label: Selection criteria row
+            type: string
+          - name: pending
+            label: Text shown for a field not yet filled in
+            type: string
+            description: >-
+              Appears publicly on the card wherever a disclosure is still
+              blank, so applicants can see what has not been published.
+          - name: applyButton
+            label: Apply button label
+            type: string
+          - name: statusOpen
+            label: "Badge: open"
+            type: string
+          - name: statusUpcoming
+            label: "Badge: coming soon"
+            type: string
+          - name: statusClosed
+            label: "Badge: closed"
+            type: string
       - name: external
         label: "Other funding: links"
         type: object
@@ -531,6 +797,48 @@ content:
             label: Description
             type: text
 
+
+  - name: events_page
+    label: Events Page
+    description: Wording on the Events page.
+    type: file
+    path: src/_data/eventsPage.json
+    fields:
+      - name: title
+        label: Page title
+        type: string
+      - name: intro
+        label: Introduction
+        type: text
+      - name: upcomingHeading
+        label: "Coming up: heading"
+        type: string
+      - name: upcomingEmpty
+        label: "Coming up: text when nothing is scheduled"
+        type: string
+      - name: pastHeading
+        label: "Past events: heading"
+        type: string
+      - name: pastNote
+        label: "Past events: note under the heading"
+        type: text
+      - name: pastEmpty
+        label: "Past events: text when nothing is written up"
+        type: string
+      - name: photosHeading
+        label: "Event page: photos heading"
+        type: string
+      - name: photoWordSingular
+        label: "Event card: the word for one photo"
+        type: string
+        description: Used in the "3 photos" note on each card.
+      - name: photoWordPlural
+        label: "Event card: the word for several photos"
+        type: string
+      - name: backLabel
+        label: "Event page: back link text"
+        type: string
+
   - name: membership_page
     label: Membership Page
     description: Wording on the Membership page.
@@ -543,62 +851,211 @@ content:
       - name: intro
         label: Introduction
         type: text
-      - name: tiersHeading
-        label: "Who can join: heading"
+
+      - name: heroImage
+        label: Picture beside the heading
+        type: image
+        description: >-
+          Optional. Sits to the right of the page title on a wide screen and
+          drops below it on a phone. A cut-out with a transparent background
+          (a PNG) sits on the page better than a photo with its own backdrop.
+      - name: heroImageAlt
+        label: Picture description
         type: string
+        description: A short description for people using screen readers.
+      - name: tiersHeading
+        label: "Categories: heading"
+        type: string
+      - name: tiersNote
+        label: "Categories: note under the heading"
+        type: text
       - name: tiers
-        label: "Who can join: list"
+        label: "Categories: list"
         type: object
         list: true
+        description: One card per membership category.
         fields:
+          - name: name
+            label: Category name
+            type: string
           - name: text
-            label: Item
+            label: What it means
             type: text
       - name: tiersReference
-        label: "Who can join: bylaws reference"
+        label: "Categories: bylaws reference"
         type: string
-      - name: benefitsHeading
-        label: "Benefits: heading"
+        description: >-
+          Shown in small print, followed by a link to the Constitution and
+          Bylaws PDF.
+      - name: bylawsLinkLabel
+        label: "Categories: bylaws link text"
         type: string
-      - name: benefits
-        label: "Benefits: list"
-        type: object
+
+      - name: eligibilityHeading
+        label: "Eligibility: heading"
+        type: string
+      - name: eligibility
+        label: "Eligibility: list"
+        type: string
         list: true
-        fields:
-          - name: text
-            label: Item
-            type: text
-      - name: joinHeading
-        label: "How to join: heading"
+
+      - name: standingHeading
+        label: "Good standing: heading"
         type: string
-      - name: steps
-        label: "How to join: numbered steps"
-        type: object
+      - name: standingNote
+        label: "Good standing: note under the heading"
+        type: text
+      - name: standing
+        label: "Good standing: list"
+        type: string
         list: true
-        fields:
-          - name: text
-            label: Step
-            type: text
+        description: What a member must do to keep the right to vote and apply.
+      - name: standingReference
+        label: "Good standing: small print"
+        type: string
+
       - name: formButtonLabel
         label: Form button label
         type: string
-      - name: qrCaption
-        label: QR code caption
+        description: >-
+          The button links to "Membership form link" under Site Settings. Paste
+          the real form address there when the form is ready.
+
+      - name: studentsHeading
+        label: "Student members: heading"
         type: string
-      - name: pendingHeading
-        label: "No form yet: heading"
+      - name: studentsNote
+        label: "Student members: note under the heading"
+        type: text
+      - name: studentsEmpty
+        label: "Student members: text when nobody is listed"
         type: string
-      - name: pendingBody
-        label: "No form yet: text"
-        type: rich-text
-      - name: conductHeading
-        label: "Conduct: heading"
+
+      - name: affiliatesHeading
+        label: "Affiliate members: heading"
         type: string
-      - name: conductBody
-        label: "Conduct: text"
-        type: rich-text
-      - name: conductReference
-        label: "Conduct: bylaws reference"
+      - name: affiliatesNote
+        label: "Affiliate members: note under the heading"
+        type: text
+      - name: affiliatesEmpty
+        label: "Affiliate members: text when nobody is listed"
+        type: string
+
+  - name: news_page
+    label: Announcements Page
+    description: Wording on the Announcements page and on each announcement.
+    type: file
+    path: src/_data/newsPage.json
+    fields:
+      - name: title
+        label: Page title
+        type: string
+      - name: empty
+        label: Text when there are no announcements
+        type: string
+      - name: attachmentsHeading
+        label: "Announcement page: attachments heading"
+        type: string
+      - name: attachmentFallbackLabel
+        label: "Announcement page: text for an attachment with no label"
+        type: string
+      - name: fileWordSingular
+        label: "List: the word for one attached file"
+        type: string
+        description: Used in the "1 file" note beside a headline.
+      - name: fileWordPlural
+        label: "List: the word for several attached files"
+        type: string
+      - name: backLabel
+        label: "Announcement page: back link text"
+        type: string
+
+  - name: not_found_page
+    label: "\"Page Not Found\" Page"
+    description: >-
+      What someone sees when they follow a broken or out-of-date link to the
+      site. Keep it short and point them somewhere useful.
+    type: file
+    path: src/_data/notFound.json
+    fields:
+      - name: eyebrow
+        label: Small label above the heading
+        type: string
+      - name: title
+        label: Heading
+        type: string
+      - name: body
+        label: Explanation
+        type: text
+      - name: primaryLabel
+        label: "First button: text"
+        type: string
+      - name: primaryUrl
+        label: "First button: where it goes"
+        type: string
+      - name: secondaryLabel
+        label: "Second button: text"
+        type: string
+      - name: secondaryUrl
+        label: "Second button: where it goes"
+        type: string
+
+  - name: labels
+    label: Buttons & Screen-Reader Labels
+    description: >-
+      Small wording used across the whole site. Most of these are never seen —
+      they are what a screen reader announces for a button or an icon. Editing
+      them changes every page at once, and a blank field leaves a control with
+      no name at all, so change them only deliberately.
+    type: file
+    path: src/_data/labels.json
+    fields:
+      - name: skipLink
+        label: "Skip link (first thing a keyboard user reaches)"
+        type: string
+      - name: navLabel
+        label: Name of the main navigation
+        type: string
+      - name: noPhotoPrefix
+        label: Text before a name when someone has no photo
+        type: string
+        description: >-
+          The person's name is added after it, giving "No photo available for
+          Jane Doe".
+      - name: socialInstagram
+        label: "Instagram icon: label"
+        type: string
+      - name: socialLinkedin
+        label: "LinkedIn icon: label"
+        type: string
+      - name: socialGithub
+        label: "GitHub icon: label"
+        type: string
+      - name: bioDrawerLabel
+        label: "Officer bio panel: name"
+        type: string
+      - name: bioDrawerAboutPrefix
+        label: "Officer bio panel: word before the officer's name"
+        type: string
+        description: >-
+          The name is added after it, giving "About Ashutosh Pawar".
+      - name: bioDrawerClose
+        label: "Officer bio panel: close button"
+        type: string
+      - name: lightboxLabel
+        label: "Photo viewer: name"
+        type: string
+      - name: lightboxClose
+        label: "Photo viewer: close button"
+        type: string
+      - name: lightboxPrev
+        label: "Photo viewer: previous button"
+        type: string
+      - name: lightboxNext
+        label: "Photo viewer: next button"
+        type: string
+      - name: lightboxPhotoAlt
+        label: "Photo viewer: description for a photo with no caption"
         type: string
 
   - name: admin_page

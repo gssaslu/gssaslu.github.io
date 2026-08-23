@@ -1,0 +1,75 @@
+---
+layout: base.njk
+---
+{#
+  One announcement's own page. The listing at /news/ is only headlines now, so
+  this is where the detail lives: the full notice, any files to download, and
+  wherever else it points.
+#}
+
+<div class="page-head">
+  <span class="eyebrow">
+    <time datetime="{{ page.date | isoDate }}">{{ page.date | longDate }}</time>
+  </span>
+  <h1>{{ title }}</h1>
+</div>
+
+{% if body %}
+  <div class="prose">{{ body | md | safe }}</div>
+{% endif %}
+
+{% if quote %}
+  <figure class="pullquote">
+    <blockquote>{{ quote }}</blockquote>
+    {% if quoteName %}
+      <figcaption>
+        <span class="pullquote__name">{{ quoteName }}</span>
+        {% if quoteRole %}
+          <span class="pullquote__role">{{ quoteRole }}</span>
+        {% endif %}
+      </figcaption>
+    {% endif %}
+  </figure>
+{% endif %}
+
+{% if image %}
+  <img
+    class="news__img"
+    src="{{ image }}"
+    alt="{{ imageAlt or title }}"
+    loading="lazy"
+  />
+{% endif %}
+
+{#
+  Attachments are downloads, links are destinations. They look different
+  because they behave differently — one leaves you with a file, the other
+  moves you somewhere.
+#}
+{% if attachments | length %}
+  <section class="section">
+    <div class="section__head"><h2>{{ newsPage.attachmentsHeading }}</h2></div>
+    <ul class="attachments">
+      {% for file in attachments %}
+        <li>
+          <a class="attachment" href="{{ file.file }}" target="_blank" rel="noopener">
+            <svg class="attachment__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm0 2 4 4h-4zM8 13h8v2H8zm0 4h8v2H8z" />
+            </svg>
+            <span class="attachment__label">{{ file.label or newsPage.attachmentFallbackLabel }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+
+{% if links | length %}
+  <div class="news__links post-links">
+    {% for link in links %}
+      <a href="{{ link.url }}">{{ link.label }}</a>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<p class="back-link"><a href="/news/">{{ newsPage.backLabel }}</a></p>

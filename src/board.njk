@@ -91,11 +91,21 @@ pageDescription: >-
   Hidden entirely when JavaScript is unavailable; the inline <details> panels
   take over in that case.
 #}
-<dialog class="bio-drawer" id="bio-drawer" aria-label="Biography">
+{#
+  The two strings the script needs travel on the element as data attributes,
+  so the drawer stays editable in the CMS without the JavaScript file having to
+  reach into the data cascade.
+#}
+<dialog
+  class="bio-drawer"
+  id="bio-drawer"
+  aria-label="{{ labels.bioDrawerLabel }}"
+  data-about-prefix="{{ labels.bioDrawerAboutPrefix }}"
+>
   <button
     type="button"
     class="bio-drawer__close"
-    aria-label="Close biography"
+    aria-label="{{ labels.bioDrawerClose }}"
   >
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.3 19.71 2.89 18.3 9.18 12 2.89 5.71 4.3 4.3l6.29 6.29 6.3-6.29z" />

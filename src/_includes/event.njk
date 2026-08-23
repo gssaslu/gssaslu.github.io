@@ -1,0 +1,116 @@
+---
+layout: base.njk
+---
+{#
+  One event's own page. Reached from the Events listing, and the thing you
+  paste into a group chat or an Instagram bio — which is the whole reason
+  events get a URL when news items do not.
+#}
+
+<div class="page-head">
+  <span class="eyebrow">
+    <time datetime="{{ page.date | isoDate }}">{{ page.date | longDate }}</time>
+    {% if kind %} · {{ kind }}{% endif %}
+  </span>
+  <h1>{{ title }}</h1>
+  {% if location %}
+    <p class="page-head__sub">{{ location }}</p>
+  {% endif %}
+</div>
+
+{% if cover %}
+  <img
+    class="event-hero"
+    src="{{ cover }}"
+    alt="{{ coverAlt or title }}"
+  />
+{% endif %}
+
+{% if summary %}
+  <div class="prose">{{ summary | md | safe }}</div>
+{% endif %}
+
+{% if photos | length %}
+  <section class="section">
+    <div class="section__head"><h2>{{ eventsPage.photosHeading }}</h2></div>
+
+    {#
+      Each thumbnail is a real link to the full-size file. With JavaScript the
+      lightbox intercepts the click; without it, the link still opens the
+      photo. Nothing here depends on the script having run.
+    #}
+    <ul class="gallery">
+      {% for photo in photos %}
+        <li class="gallery__item">
+          <a
+            class="gallery__link"
+            href="{{ photo.image }}"
+            data-caption="{{ photo.caption }}"
+          >
+            <img
+              class="gallery__img"
+              src="{{ photo.image }}"
+              alt="{{ photo.caption or title }}"
+              loading="lazy"
+            />
+          </a>
+          {% if photo.caption %}
+            <p class="gallery__caption">{{ photo.caption }}</p>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+
+{% if links | length %}
+  <div class="news__links post-links">
+    {% for link in links %}
+      <a href="{{ link.url }}">{{ link.label }}</a>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<p class="back-link"><a href="/events/">{{ eventsPage.backLabel }}</a></p>
+
+{#
+  One dialog, reused for every photo — the same shape as the bio drawer on the
+  board page. Because it is a single <dialog> opened with showModal(), two
+  photos can never be open at once, and Escape, focus trapping and focus
+  return all come from the element rather than from script.
+#}
+{#
+  The three strings the script needs travel on the element as data attributes,
+  so the lightbox stays editable in the CMS without the JavaScript file having
+  to know anything about the data cascade.
+#}
+<dialog
+  class="lightbox"
+  id="lightbox"
+  aria-label="{{ labels.lightboxLabel }}"
+  data-photo-alt="{{ labels.lightboxPhotoAlt }}"
+  data-label-single="{{ labels.lightboxLabel }}"
+>
+  <button type="button" class="lightbox__close" aria-label="{{ labels.lightboxClose }}">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.3 19.71 2.89 18.3 9.18 12 2.89 5.71 4.3 4.3l6.29 6.29 6.3-6.29z" />
+    </svg>
+  </button>
+
+  <button type="button" class="lightbox__nav lightbox__nav--prev" aria-label="{{ labels.lightboxPrev }}">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+    </svg>
+  </button>
+
+  <figure class="lightbox__figure">
+    <img class="lightbox__img" src="" alt="" />
+    <figcaption class="lightbox__caption"></figcaption>
+  </figure>
+
+  <button type="button" class="lightbox__nav lightbox__nav--next" aria-label="{{ labels.lightboxNext }}">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M8.59 16.59 10 18l6-6-6-6-1.41 1.41L13.17 12z" />
+    </svg>
+  </button>
+</dialog>

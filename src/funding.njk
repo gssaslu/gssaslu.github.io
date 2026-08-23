@@ -58,7 +58,7 @@ pageDescription: >-
             />
           {% else %}
             <span class="recipient__photo recipient__photo--empty" role="img"
-                  aria-label="No photo available for {{ person.data.name }}">
+                  aria-label="{{ labels.noPhotoPrefix }} {{ person.data.name }}">
               {% include "partials/avatar-icon.njk" %}
             </span>
           {% endif %}
@@ -84,12 +84,27 @@ pageDescription: >-
       {% endif %}
     </div>
 
+    {#
+      The whole card is the link — there is nothing else on it to click, so a
+      separate "apply" button would only be a second way to do the same thing.
+      These all leave the site, hence the new tab and the outward arrow.
+    #}
     <div class="grid">
       {% for item in fundingPage.external %}
-        <div class="feature">
-          <h3><a href="{{ item.url }}">{{ item.title }}</a></h3>
+        <a
+          class="feature feature--link"
+          href="{{ item.url }}"
+          target="_blank"
+          rel="noopener"
+        >
+          <h3>
+            {{ item.title }}
+            <svg class="feature__out" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3zM19 19H5V5h6V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6h-2z" />
+            </svg>
+          </h3>
           <p>{{ item.description }}</p>
-        </div>
+        </a>
       {% endfor %}
     </div>
   </section>

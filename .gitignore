@@ -26,6 +26,20 @@ applications*
 # on the home page would fall back to its "not uploaded yet" placeholder.
 !src/media/*.pdf
 
+# ...and the Membership page is site content, not the roster. The blanket
+# "members*" rule above matches these paths by accident — it is a prefix match,
+# so it catches "membership" too, and git will not even descend into a folder
+# whose own name matches. Without these exceptions the page vanishes from the
+# repository without a single warning and the published site 404s.
+!src/membership.njk
+!src/_data/membershipPage.json
+!src/content/members/
+!src/content/members/members.json
+!src/content/members/*.md
+
+# The guard still stands inside that folder: a roster dropped there stays out.
+src/content/members/roster*
+
 # Full-size originals kept on disk for re-editing. The site serves the resized
 # copies; committing a 4-5 MB source would sit in git history permanently.
 src/assets/img/slu_campus_2.jpg

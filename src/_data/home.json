@@ -25,5 +25,11 @@
   "ctaHeading": "Join GSSA",
   "ctaBody": "Membership is free. Attend one meeting or event this semester and you become an Active Member, with the right to vote in GSSA elections and run for office.",
   "ctaButton": "Become a member",
-  "ctaButtonSecondary": "Meet the board"
+  "ctaButtonSecondary": "Meet the board",
+  "heroEmptyLabel": "Campus photo",
+  "heroEmptyAlt": "Campus photo not uploaded yet",
+  "docOpenLabel": "Open in a new tab",
+  "docFallback": "Your browser cannot display PDFs inline.",
+  "docDownloadLabel": "Download the PDF",
+  "logoPlaceholder": "Logo"
 }

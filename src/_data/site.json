@@ -3,10 +3,10 @@
   "shortName": "GSSA",
   "institution": "Saint Louis University",
   "description": "A student-led organization at Saint Louis University advancing the understanding and application of geospatial science and technology.",
-  "url": "https://mustfizurrahaman.github.io",
+  "url": "https://gssaslu.github.io",
   "currentTerm": "2026-2027",
   "foundedYear": "2026",
-  "membershipFormUrl": "",
+  "membershipFormUrl": "https://docs.google.com/forms/d/e/REPLACE-WITH-FORM-ID/viewform",
   "contactEmail": "",
   "center": {
     "name": "Geospatial Center at Saint Louis University",

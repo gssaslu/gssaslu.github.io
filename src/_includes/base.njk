@@ -32,7 +32,7 @@
   </head>
 
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main">{{ labels.skipLink }}</a>
 
     <div class="layout">
       {% include "partials/sidebar.njk" %}
@@ -53,10 +53,6 @@
             &copy; {% year %} {{ site.orgName }} at {{ site.institution }}.
             Affiliated with the
             <a href="{{ site.center.url }}">{{ site.center.name }}</a>.
-          </p>
-          <p>
-            GSSA is a student-led organization. It does not speak for, or bind,
-            Saint Louis University or the Geospatial Center.
           </p>
         </footer>
       </div>

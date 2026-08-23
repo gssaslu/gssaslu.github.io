@@ -10,8 +10,8 @@
     />
   {% else %}
     {# Placeholder until an officer uploads a campus photo in the CMS. #}
-    <div class="hero__img hero__img--empty" role="img" aria-label="Campus photo not uploaded yet">
-      <span>Campus photo</span>
+    <div class="hero__img hero__img--empty" role="img" aria-label="{{ home.heroEmptyAlt }}">
+      <span>{{ home.heroEmptyLabel }}</span>
     </div>
   {% endif %}
 </div>

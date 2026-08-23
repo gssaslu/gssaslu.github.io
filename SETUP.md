@@ -102,8 +102,9 @@ In the editor, under **Site Settings**:
 
 - [ ] `contactEmail`
 - [ ] Instagram / LinkedIn URLs
-- [ ] `membershipFormUrl` — the moment you paste this, the Membership page shows
-      the form and generates a matching QR code
+- [ ] `membershipFormUrl` — the address behind the **Membership Form** button.
+      It ships with a placeholder that goes nowhere; replace it before sharing
+      the page
 
 Under **Board Members**:
 

@@ -25,7 +25,7 @@
   --bg-alt: #f6f8fb;
 
   /* Sidebar */
-  --sidebar-w: 17.5rem;
+  --sidebar-w: 20rem;
   --sidebar-fg: #eaf0fa;
   --sidebar-fg-dim: #9db0cf;
 
@@ -45,9 +45,9 @@
     "Courier New", monospace;
 
   /* Fluid type scale — one ratio, so every size relates to the others. */
-  --step--2: clamp(0.69rem, 0.67rem + 0.08vw, 0.73rem);
-  --step--1: clamp(0.82rem, 0.79rem + 0.13vw, 0.89rem);
-  --step-0: clamp(1rem, 0.96rem + 0.19vw, 1.09rem);
+  --step--2: clamp(0.78rem, 0.75rem + 0.09vw, 0.82rem);
+  --step--1: clamp(0.92rem, 0.89rem + 0.15vw, 1rem);
+  --step-0: clamp(1.13rem, 1.08rem + 0.21vw, 1.23rem);
   --step-1: clamp(1.19rem, 1.12rem + 0.33vw, 1.36rem);
   --step-2: clamp(1.41rem, 1.29rem + 0.55vw, 1.7rem);
   --step-3: clamp(1.67rem, 1.48rem + 0.87vw, 2.13rem);
@@ -313,8 +313,8 @@ hr {
   border-radius: var(--radius);
   color: var(--sidebar-fg);
   text-decoration: none;
-  font-weight: 550;
-  font-size: var(--step--1);
+  font-weight: 700;
+  font-size: 1.11rem;
   letter-spacing: -0.005em;
   border-left: 3px solid transparent;
   transition: background-color 0.18s ease, border-color 0.18s ease,
@@ -330,6 +330,59 @@ hr {
   background: rgba(246, 204, 70, 0.14);
   border-left-color: var(--gold);
   color: #fff;
+}
+
+/* Nav group — a disclosure that looks like the links around it. The summary
+   carries .sidebar__link so it inherits the same padding, hover and focus ring
+   as a real nav item; only the caret says it opens rather than navigates. */
+.sidebar__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.sidebar__group-toggle {
+  cursor: pointer;
+  justify-content: space-between;
+  list-style: none;
+}
+
+/* Safari still draws its own triangle without this. */
+.sidebar__group-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.sidebar__caret {
+  width: 0.6rem;
+  flex-shrink: 0;
+  fill: currentColor;
+  opacity: 0.65;
+  transition: transform 0.2s ease;
+}
+
+.sidebar__group[open] .sidebar__caret {
+  transform: rotate(180deg);
+}
+
+/* An open group is a section of the nav, so its own label stops competing
+   with the children for attention. */
+.sidebar__group[open] > .sidebar__group-toggle {
+  color: var(--sidebar-fg-dim);
+}
+
+.sidebar__sub {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+/* The indent is on the link rather than on a wrapper, so the gold
+   current-page bar still lines up with the bars of the links above. */
+/* Bold too, one notch back, so an open group still reads as a group rather
+   than as five links all shouting at the same volume. */
+.sidebar__link--sub {
+  padding-left: 1.35rem;
+  font-weight: 600;
 }
 
 .sidebar__meta {
@@ -406,7 +459,7 @@ hr {
 
   .sidebar__link {
     padding: 0.4rem 0.8rem;
-    font-size: 0.88rem;
+    font-size: 1.11rem;
     border-left: 0;
     border-bottom: 2px solid transparent;
     background: rgba(255, 255, 255, 0.07);
@@ -415,6 +468,33 @@ hr {
   .sidebar__link[aria-current="page"] {
     border-left: 0;
     border-bottom-color: var(--gold);
+  }
+
+  /* The nav is a wrapping row of pills here. Closed, the group is one more
+     pill; open, it claims a full line so its children sit under it rather
+     than scattering into the row. */
+  .sidebar__group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .sidebar__group[open] {
+    flex: 1 0 100%;
+  }
+
+  .sidebar__group-toggle {
+    gap: 0.4rem;
+  }
+
+  .sidebar__sub {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .sidebar__link--sub {
+    padding-left: 0.8rem;
   }
 
   /* Address and socials repeat in the footer on small screens. */
@@ -444,13 +524,75 @@ hr {
 .content {
   flex-grow: 1;
   width: 100%;
-  max-width: 76rem;
+  /* Wide enough that a left-aligned column still reaches most of the way
+     across a large screen — a 76rem cap left the right third of every page
+     empty. Prose is unaffected either way: paragraphs cap at --measure. */
+  max-width: 88rem;
   padding: 2.5rem 1.5rem 3.5rem;
-  margin: 0 auto;
+  /* Left-aligned, not centred: the column starts where the sidebar ends, so
+     the eye returns to the same left edge on every page. Centring it inside a
+     wide viewport pushes the text away from the sidebar and leaves the whole
+     page looking untethered. `auto` on the right only so the cap still holds. */
+  margin: 0 auto 0 0;
+}
+
+/* Heading beside an image. The art column is capped so a tall cut-out cannot
+   push the heading into a narrow ribbon, and the whole thing collapses to one
+   column well before the sidebar breakpoint — a 14rem picture next to a 14rem
+   paragraph helps nobody. */
+/* Heading with a picture beside it.
+
+   On a phone the picture is simply the next block down — it stacks, it takes
+   its own space, nothing clever.
+
+   On a wide screen it is lifted OUT of the flow. In the flow, a tall image sets
+   the height of the row it shares with the heading, and a 450px picture next to
+   a 200px heading leaves 250px of dead air before the first section. Taking it
+   out means the heading block keeps its own height, the sections below sit
+   where they always did, and the art simply hangs over them on the right. */
+.page-lead {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.page-art {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 58rem) {
+  .page-lead--with-art {
+    position: relative;
+  }
+
+  /* Keep the words clear of the picture, since it no longer reserves a column
+     of its own. */
+  .page-lead--with-art .page-head {
+    padding-right: calc(var(--art-w) + 2.5rem);
+  }
+
+  .page-lead--with-art .page-art {
+    --art-w: 20rem;
+    position: absolute;
+    right: 0;
+    top: 2.5rem;
+    width: var(--art-w);
+    /* It overhangs the content below, so it must never swallow a click meant
+       for whatever it is hanging over. */
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .page-lead--with-art {
+    --art-w: 20rem;
+  }
 }
 
 .page-head {
-  margin-bottom: clamp(2rem, 1.5rem + 1.5vw, 3rem);
+  /* Kept modest because whatever follows almost always brings its own
+     --space-section on top of this. The two used to stack to about 7rem. */
+  margin-bottom: clamp(1rem, 0.75rem + 1vw, 1.75rem);
 }
 
 .page-head h1 {
@@ -595,11 +737,13 @@ hr {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.72rem 1.35rem;
+  padding: 0.8rem 1.6rem;
   border-radius: var(--radius);
   font-family: var(--font);
   font-weight: 600;
-  font-size: var(--step--1);
+  /* A step above body text: a button is a thing you are being asked to press,
+     so it should not read smaller than the sentence that asked. */
+  font-size: var(--step-1);
   letter-spacing: -0.005em;
   text-decoration: none;
   border: 2px solid transparent;
@@ -672,6 +816,34 @@ hr {
   box-shadow: var(--shadow);
 }
 
+/* A card that is itself a link. Same box as a plain .feature, minus the
+   underline and inherited link colour that would otherwise make the whole
+   card look like one long anchor. */
+.feature--link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.feature--link:hover h3,
+.feature--link:focus-visible h3 {
+  color: var(--blue);
+}
+
+.feature__out {
+  width: 0.75em;
+  height: 0.75em;
+  fill: currentColor;
+  opacity: 0.45;
+  margin-left: 0.3em;
+  vertical-align: baseline;
+  transition: opacity 0.2s ease;
+}
+
+.feature--link:hover .feature__out {
+  opacity: 1;
+}
+
 .feature h3 {
   font-size: var(--step-0);
   margin-bottom: 0.35rem;
@@ -718,6 +890,16 @@ hr {
   white-space: nowrap;
 }
 
+.news__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.news__title a:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
 .news__title {
   font-family: var(--font-display);
   font-size: var(--step-1);
@@ -747,7 +929,7 @@ hr {
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 0.5rem;
-  font-size: 0.86rem;
+  font-size: 0.968rem;
 }
 
 .news__links a {
@@ -1009,12 +1191,12 @@ details.person > summary:focus-visible {
   margin-top: 1rem;
   padding-top: 1rem;
   border-top: 1px solid var(--line);
-  font-size: 0.92rem;
+  font-size: 1.035rem;
   max-width: 44rem;
 }
 
 .person__pron {
-  font-size: 0.82rem;
+  font-size: 0.922rem;
   color: var(--muted);
   font-style: italic;
   margin: 0 0 0.6rem;
@@ -1025,7 +1207,7 @@ details.person > summary:focus-visible {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-size: 0.68rem;
+  font-size: 0.765rem;
   color: var(--blue);
   margin-right: 0.35rem;
 }
@@ -1035,7 +1217,7 @@ details.person > summary:focus-visible {
 }
 
 .person__contact {
-  font-size: 0.85rem;
+  font-size: 0.956rem;
   margin: 0.9rem 0 0;
 }
 
@@ -1248,7 +1430,7 @@ details.person > summary:focus-visible {
 }
 
 .bio-drawer__program {
-  font-size: 0.9rem;
+  font-size: 1.012rem;
   color: var(--blue);
   font-weight: 600;
   margin: 0 0 1.1rem;
@@ -1257,7 +1439,7 @@ details.person > summary:focus-visible {
 .bio-drawer__content {
   border-top: 1px solid var(--line);
   padding-top: 1.25rem;
-  font-size: 0.95rem;
+  font-size: 1.069rem;
 }
 
 .bio-drawer__content > :last-child {
@@ -1360,7 +1542,7 @@ details.person > summary:focus-visible {
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: 0.92rem;
+  font-size: 1.035rem;
 }
 
 .roster li {
@@ -1537,12 +1719,12 @@ details.person > summary:focus-visible {
 }
 
 .recipient__name {
-  font-size: 1rem;
+  font-size: 1.125rem;
   margin: 0 0 0.2rem;
 }
 
 .recipient__award {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--blue);
   text-transform: uppercase;
@@ -1551,14 +1733,557 @@ details.person > summary:focus-visible {
 }
 
 .recipient__note {
-  font-size: 0.88rem;
+  font-size: 0.99rem;
   color: var(--muted);
   margin: 0;
+}
+
+/* Pull quote — someone's own words inside an announcement. The gold rule on
+   the left is the same device the callout uses, at a quieter weight, so a
+   quote reads as part of the post rather than as a second box. */
+.pullquote {
+  margin: 1.1rem 0;
+  padding: 0.15rem 0 0.15rem 1.15rem;
+  border-left: 3px solid var(--gold);
+  max-width: var(--measure);
+}
+
+.pullquote blockquote {
+  margin: 0;
+  font-size: var(--step-1);
+  line-height: 1.5;
+  font-style: italic;
+  color: var(--ink);
+}
+
+.pullquote figcaption {
+  margin-top: 0.5rem;
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+.pullquote__name {
+  font-weight: 700;
+  color: var(--body);
+}
+
+.pullquote__role::before {
+  content: " · ";
+}
+
+/* Announcement list — headlines only, each row a link to the full notice.
+   Rows rather than cards: an announcement is a line of text, and a grid of
+   boxes around single lines makes a short list look emptier than it is. */
+.news-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.news-list__item {
+  border-bottom: 1px solid var(--line);
+}
+
+/* The whole row is the target, not just the headline — a tall strip is far
+   easier to hit than a line of text, especially on a phone. */
+.news-list__link {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr auto auto;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  padding: 1rem 0.75rem 1rem 0.25rem;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--radius);
+  transition: background-color 0.15s ease, padding-left 0.15s ease;
+}
+
+.news-list__link:hover,
+.news-list__link:focus-visible {
+  background: var(--bg-alt);
+  padding-left: 0.75rem;
+}
+
+.news-list__date {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--blue);
+  white-space: nowrap;
+}
+
+.news-list__title {
+  font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.news-list__link:hover .news-list__title {
+  color: var(--blue);
+}
+
+.news-list__mark {
+  font-size: var(--step--2);
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  white-space: nowrap;
+}
+
+.news-list__arrow {
+  width: 1.1rem;
+  fill: var(--muted);
+  align-self: center;
+  transition: transform 0.15s ease;
+}
+
+.news-list__link:hover .news-list__arrow {
+  transform: translateX(3px);
+  fill: var(--blue);
+}
+
+@media (max-width: 34rem) {
+  .news-list__link {
+    grid-template-columns: 1fr auto;
+    gap: 0.15rem 0.75rem;
+  }
+
+  .news-list__date {
+    grid-column: 1 / -1;
+  }
+
+  .news-list__marks {
+    grid-column: 1;
+  }
+}
+
+/* Attachments — a download, not a destination, so it reads as a file rather
+   than as a link. */
+.attachments {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+  max-width: var(--measure);
+}
+
+.attachment {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: var(--step--1);
+  font-weight: 550;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
+}
+
+.attachment:hover,
+.attachment:focus-visible {
+  border-color: var(--blue);
+  color: var(--blue);
+  box-shadow: var(--shadow);
+}
+
+.attachment__icon {
+  width: 1.35rem;
+  height: 1.35rem;
+  flex-shrink: 0;
+  fill: var(--blue);
+}
+
+/* --------------------------------------------------------------------------
+   Events
+   -------------------------------------------------------------------------- */
+
+/* Upcoming — a line of text each. Same date-in-the-margin rhythm as the news
+   feed, so the two pages read as siblings. */
+.event-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.event-row {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.event-row:last-child {
+  border-bottom: 0;
+}
+
+.event-row__when {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--blue);
+  padding-top: 0.15rem;
+}
+
+.event-row__title {
+  font-size: var(--step-0);
+  margin: 0 0 0.15rem;
+}
+
+.event-row__title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.event-row__title a:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+.event-row__meta {
+  font-size: var(--step--1);
+  color: var(--muted);
+  margin: 0;
+}
+
+@media (max-width: 34rem) {
+  .event-row {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}
+
+/* Past — photo first. The cover is what makes someone open the write-up, so
+   it gets the top of the card and the text sits under it. */
+.event-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+}
+
+.event-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.event-card__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.event-card__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: var(--bg-alt);
+}
+
+/* No cover yet: a flat tint rather than a broken-image icon or a stock photo
+   standing in for something that has not been shot. */
+.event-card__img--empty {
+  background-image: linear-gradient(140deg, #eaf0fa 0%, #dbe6f7 100%);
+}
+
+.event-card__body {
+  padding: 1.1rem 1.25rem 1.35rem;
+}
+
+.event-card__meta {
+  font-size: var(--step--2);
+  font-weight: 700;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.35rem;
+}
+
+.event-card__title {
+  font-size: var(--step-0);
+  margin: 0 0 0.3rem;
+}
+
+.event-card__link:hover .event-card__title {
+  color: var(--blue);
+}
+
+.event-card__where {
+  font-size: var(--step--1);
+  color: var(--muted);
+  margin: 0;
+}
+
+.event-card__count {
+  font-size: var(--step--2);
+  color: var(--muted);
+  margin: 0.5rem 0 0;
+}
+
+/* One event's own page */
+.event-hero {
+  display: block;
+  width: 100%;
+  max-height: 26rem;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.75rem;
+  background: var(--bg-alt);
+}
+
+/* Shared by event and announcement pages — both are a headline, a body and a
+   way back. */
+.prose {
+  max-width: var(--measure);
+}
+
+.post-links {
+  margin-top: 1.5rem;
+}
+
+.back-link {
+  margin-top: var(--space-section);
+  font-size: var(--step--1);
+}
+
+/* Gallery — square thumbnails so a mix of portrait and landscape phone photos
+   still lines up into a grid instead of a ragged staircase. */
+.gallery {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
+}
+
+.gallery__link {
+  display: block;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.gallery__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: var(--bg-alt);
+  transition: transform 0.3s ease;
+}
+
+.gallery__link:hover .gallery__img,
+.gallery__link:focus-visible .gallery__img {
+  transform: scale(1.04);
+}
+
+.gallery__caption {
+  font-size: var(--step--2);
+  color: var(--muted);
+  line-height: 1.45;
+  margin: 0.45rem 0 0;
+}
+
+/* Lightbox */
+.lightbox {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  max-width: 100vw;
+  max-height: 100vh;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lightbox::backdrop {
+  background: rgba(0, 10, 26, 0.88);
+}
+
+.lightbox:not([open]) {
+  display: none;
+}
+
+.lightbox__figure {
+  margin: 0;
+  min-width: 0;
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+  align-content: center;
+}
+
+.lightbox__img {
+  max-width: 100%;
+  max-height: 82vh;
+  border-radius: var(--radius);
+  background: #000;
+}
+
+.lightbox__caption {
+  color: #dce6f6;
+  font-size: var(--step--1);
+  text-align: center;
+  max-width: 46ch;
+  margin: 0;
+}
+
+.lightbox__caption[hidden] {
+  display: none;
+}
+
+.lightbox__close,
+.lightbox__nav {
+  border: 0;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  transition: background 0.2s ease;
+}
+
+.lightbox__close:hover,
+.lightbox__nav:hover {
+  background: rgba(255, 255, 255, 0.26);
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.6rem;
+  height: 2.6rem;
+}
+
+.lightbox__nav {
+  width: 3rem;
+  height: 3rem;
+  margin: 0 0.6rem;
+}
+
+.lightbox__nav[hidden] {
+  display: none;
+}
+
+.lightbox__close svg,
+.lightbox__nav svg {
+  width: 55%;
+  height: 55%;
+  fill: currentColor;
+}
+
+@media (max-width: 34rem) {
+  .lightbox__nav {
+    width: 2.4rem;
+    height: 2.4rem;
+    margin: 0 0.25rem;
+  }
 }
 
 /* --------------------------------------------------------------------------
    Membership
    -------------------------------------------------------------------------- */
+/* Members — a plain grid of faces, not cards. No border, no panel, no shadow:
+   the photos carry the rhythm on their own, which keeps a long roll call from
+   reading as a wall of boxes. The board page still uses cards, because an
+   officer card holds a bio worth opening; a member entry holds three lines. */
+.members {
+  display: grid;
+  gap: 1.75rem 1rem;
+  /* Wide enough that a two-word name — "Mustafizur Rahaman" — sits on one
+     line. Narrower columns fit more faces per row but break most full names
+     across two, which is what makes a roll call look ragged. */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
+}
+
+.member {
+  text-align: center;
+}
+
+.member__photo {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  object-fit: cover;
+  /* Same upward crop bias as the officer photos — a square cut from the middle
+     of a portrait lands around the mouth. */
+  object-position: center 25%;
+  margin: 0 auto 0.7rem;
+  background: var(--bg-alt);
+  box-shadow: 0 0 0 1px var(--line);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.member:hover .member__photo {
+  transform: scale(1.04);
+  box-shadow: 0 0 0 2px var(--blue);
+}
+
+.member__photo--empty {
+  display: grid;
+  place-items: center;
+  border: 1px dashed var(--line);
+  box-shadow: none;
+  color: #b9c4d4;
+}
+
+.member__photo--empty svg {
+  width: 46%;
+  height: 46%;
+  fill: currentColor;
+}
+
+.member__name {
+  font-size: 1.057rem;
+  line-height: 1.3;
+  margin: 0 0 0.15rem;
+  text-wrap: balance;
+}
+
+/* Linked only when the member has given a profile address; otherwise the name
+   renders as plain text and never picks up link styling at all. */
+.member__name a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.member__name a:hover,
+.member__name a:focus-visible {
+  color: var(--blue);
+  border-bottom-color: currentColor;
+}
+
+.member__title {
+  font-size: 0.878rem;
+  line-height: 1.4;
+  color: var(--muted);
+  margin: 0;
+}
 
 .callout {
   border: 1px solid rgba(217, 169, 31, 0.28);
@@ -1649,7 +2374,7 @@ details.person > summary:focus-visible {
 }
 
 .qr figcaption {
-  font-size: 0.78rem;
+  font-size: 0.878rem;
   color: var(--muted);
   max-width: 180px;
   line-height: 1.45;
@@ -1767,7 +2492,7 @@ details.person > summary:focus-visible {
 }
 
 .admin-task__what {
-  font-size: 0.82rem;
+  font-size: 0.922rem;
   color: var(--muted);
   font-style: italic;
   margin-bottom: 0.85rem;
@@ -1777,7 +2502,7 @@ details.person > summary:focus-visible {
   background: var(--bg-alt);
   border-radius: var(--radius);
   padding: 0.75rem 0.9rem;
-  font-size: 0.88rem;
+  font-size: 0.99rem;
   margin-bottom: 0;
 }
 
@@ -1907,7 +2632,7 @@ details.person > summary:focus-visible {
 
 .news--rail .news__date {
   padding-top: 0;
-  font-size: 0.7rem;
+  font-size: 0.787rem;
 }
 
 .news--rail .news__title {
@@ -1915,7 +2640,7 @@ details.person > summary:focus-visible {
 }
 
 .news--rail .news__body {
-  font-size: 0.82rem;
+  font-size: 0.922rem;
   line-height: 1.6;
   color: var(--body);
 }
@@ -1929,7 +2654,7 @@ details.person > summary:focus-visible {
 }
 
 .news--rail .news__links {
-  font-size: 0.78rem;
+  font-size: 0.878rem;
 }
 
 /* --------------------------------------------------------------------------
@@ -2178,7 +2903,9 @@ details.person > summary:focus-visible {
   }
 
   .content {
-    padding: 4rem 3.5rem 5rem;
+    /* Deep left inset, so the column reads as its own field rather than as
+       something butted up against the sidebar. */
+    padding: 4rem 3.5rem 5rem 14rem;
   }
 
   .site-footer {

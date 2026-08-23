@@ -1,0 +1,45 @@
+{#
+  One member on the Membership page. Expects a `person` variable (an item from
+  `collections.members`).
+
+  Deliberately quieter than the Executive Board card: photo, name, title,
+  nothing to open and no panel around it. Officers get a bio because the
+  membership needs to know who is accountable; a member entry is a roll call,
+  so it is three lines under a face and nothing more.
+
+  Same empty-photo fallback as everywhere else — a missing headshot shows the
+  neutral avatar rather than a broken image or a hole in the grid.
+
+  The name becomes a link only when `link` is filled in. An empty field leaves
+  plain text rather than an anchor pointing at the current page, so nobody
+  clicks a name and stays exactly where they were.
+#}
+
+<article class="member">
+  {% if person.data.photo %}
+    <img
+      class="member__photo"
+      src="{{ person.data.photo }}"
+      alt="{{ person.data.name }}"
+      width="84"
+      height="84"
+      loading="lazy"
+    />
+  {% else %}
+    <span class="member__photo member__photo--empty" role="img"
+          aria-label="{{ labels.noPhotoPrefix }} {{ person.data.name }}">
+      {% include "partials/avatar-icon.njk" %}
+    </span>
+  {% endif %}
+
+  <h3 class="member__name">
+    {% if person.data.link %}
+      <a href="{{ person.data.link }}" target="_blank" rel="noopener">{{ person.data.name }}</a>
+    {% else %}
+      {{ person.data.name }}
+    {% endif %}
+  </h3>
+  {% if person.data.title %}
+    <p class="member__title">{{ person.data.title }}</p>
+  {% endif %}
+</article>

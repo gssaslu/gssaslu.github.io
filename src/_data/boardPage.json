@@ -7,5 +7,7 @@
   "archiveNote": "GSSA keeps a public record of everyone who has served.",
   "electionsHeading": "Elections",
   "electionsBody": "Regular elections are held in March or April and completed before May 1. Nominations stay open for at least fourteen days, and any Active Member in good standing may nominate themselves or another eligible member. Voting is by confidential ballot, administered by non-candidate members.",
-  "electionsReference": "Constitution Art. V · Bylaws Art. V. The founding board serves through April 30, 2027; the first regular election is Spring 2027."
+  "electionsReference": "Constitution Art. V · Bylaws Art. V. The founding board serves through April 30, 2027; the first regular election is Spring 2027.",
+  "readBioLabel": "Read bio",
+  "pronunciationLabel": "Pronounced"
 }

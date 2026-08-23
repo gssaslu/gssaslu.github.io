@@ -81,9 +81,12 @@
       body.appendChild(content);
     }
 
+    var aboutPrefix = drawer.getAttribute("data-about-prefix") || "";
     drawer.setAttribute(
       "aria-label",
-      name ? "About " + name.textContent.trim() : "Biography"
+      name
+        ? (aboutPrefix + " " + name.textContent.trim()).trim()
+        : drawer.getAttribute("aria-label")
     );
   }
 

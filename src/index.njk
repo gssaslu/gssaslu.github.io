@@ -30,14 +30,14 @@ pageDescription: >-
           <span class="doc__name">{{ home.bylawsHeading }}</span>
         {% endif %}
         <a class="doc__open" href="{{ home.bylawsFile }}" target="_blank" rel="noopener">
-          Open in a new tab
+          {{ home.docOpenLabel }}
         </a>
       </div>
       {# <object> keeps a real fallback for browsers with no built-in viewer. #}
       <object class="doc__frame" data="{{ home.bylawsFile }}" type="application/pdf">
         <p class="doc__fallback">
-          Your browser cannot display PDFs inline.
-          <a href="{{ home.bylawsFile }}">Download the PDF</a>.
+          {{ home.docFallback }}
+          <a href="{{ home.bylawsFile }}">{{ home.docDownloadLabel }}</a>.
         </p>
       </object>
     {% else %}
@@ -62,7 +62,9 @@ pageDescription: >-
             <time datetime="{{ item.date | isoDate }}">{{ item.date | newsDate }}</time>
           </div>
           <div>
-            <h3 class="news__title">{{ item.data.title }}</h3>
+            <h3 class="news__title">
+              <a href="{{ item.url }}">{{ item.data.title }}</a>
+            </h3>
             <div class="news__body">{{ item.data.body | md | safe }}</div>
 
             {% if item.data.image %}
@@ -131,7 +133,7 @@ pageDescription: >-
                logo is added in the CMS. #}
             {% for i in range(0, 6) %}
               <li class="marquee__item marquee__item--empty">
-                <span>Logo</span>
+                <span>{{ home.logoPlaceholder }}</span>
               </li>
             {% endfor %}
           {% endif %}

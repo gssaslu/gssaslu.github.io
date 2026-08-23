@@ -1,0 +1,148 @@
+---
+layout: base.njk
+permalink: /membership/
+title: Membership
+pageDescription: >-
+  Membership in GSSA is free and open to every Saint Louis University student —
+  eligibility, membership categories, how to stay in good standing, and the
+  signup form.
+---
+
+{#
+  Two columns only when there is art to put in the second one. With the field
+  empty the heading keeps the full width rather than leaving a gap where a
+  picture is supposed to be.
+#}
+<div class="page-lead{% if membershipPage.heroImage %} page-lead--with-art{% endif %}">
+  <div class="page-head">
+    <h1>{{ membershipPage.title }}</h1>
+    <p class="page-head__sub">{{ membershipPage.intro }}</p>
+  </div>
+
+  {% if membershipPage.heroImage %}
+    <img
+      class="page-art"
+      src="{{ membershipPage.heroImage }}"
+      alt="{{ membershipPage.heroImageAlt }}"
+      loading="lazy"
+    />
+  {% endif %}
+</div>
+
+{# ---- Categories ------------------------------------------------------- #}
+<section class="section">
+  <div class="section__head">
+    <h2>{{ membershipPage.tiersHeading }}</h2>
+    {% if membershipPage.tiersNote %}
+      <p class="section__note">{{ membershipPage.tiersNote }}</p>
+    {% endif %}
+  </div>
+
+  <div class="grid">
+    {% for tier in membershipPage.tiers %}
+      <div class="feature">
+        <h3>{{ tier.name }}</h3>
+        <p>{{ tier.text }}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if membershipPage.tiersReference %}
+    <p class="ref">
+      {{ membershipPage.tiersReference }}
+      <a href="{{ home.bylawsFile }}">{{ membershipPage.bylawsLinkLabel }}</a>.
+    </p>
+  {% endif %}
+</section>
+
+{# ---- Eligibility ------------------------------------------------------ #}
+{% if membershipPage.eligibility | length %}
+  <section class="section">
+    <div class="section__head"><h2>{{ membershipPage.eligibilityHeading }}</h2></div>
+    <ul class="rights">
+      {% for item in membershipPage.eligibility %}
+        <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+
+{# ---- Good standing ----------------------------------------------------- #}
+{% if membershipPage.standing | length %}
+  <section class="section">
+    <div class="section__head">
+      <h2>{{ membershipPage.standingHeading }}</h2>
+      {% if membershipPage.standingNote %}
+        <p class="section__note">{{ membershipPage.standingNote }}</p>
+      {% endif %}
+    </div>
+    <ul class="rights">
+      {% for item in membershipPage.standing %}
+        <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+    {% if membershipPage.standingReference %}
+      <p class="ref">{{ membershipPage.standingReference }}</p>
+    {% endif %}
+  </section>
+{% endif %}
+
+{# ---- The form ----------------------------------------------------------
+  One button, one link. The address lives in Site Settings so it can be
+  swapped without touching this template.
+#}
+<section class="section" id="join">
+  <div class="btn-row">
+    <a
+      class="btn btn--primary"
+      href="{{ site.membershipFormUrl }}"
+      target="_blank"
+      rel="noopener"
+    >{{ membershipPage.formButtonLabel }}</a>
+  </div>
+</section>
+
+{# ---- Members -----------------------------------------------------------
+  One collection, split by `category` — the same shape as the board page,
+  which splits officers from the advisor on `isAdvisor`.
+#}
+{% set students = collections.members | where("category", "student") %}
+{% set affiliates = collections.members | where("category", "affiliate") %}
+
+<section class="section">
+  <div class="section__head">
+    <h2>{{ membershipPage.studentsHeading }}</h2>
+    {% if membershipPage.studentsNote %}
+      <p class="section__note">{{ membershipPage.studentsNote }}</p>
+    {% endif %}
+  </div>
+
+  {% if students | length %}
+    <div class="members">
+      {% for person in students %}
+        {% include "partials/member-card.njk" %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="section__note">{{ membershipPage.studentsEmpty }}</p>
+  {% endif %}
+</section>
+
+<section class="section">
+  <div class="section__head">
+    <h2>{{ membershipPage.affiliatesHeading }}</h2>
+    {% if membershipPage.affiliatesNote %}
+      <p class="section__note">{{ membershipPage.affiliatesNote }}</p>
+    {% endif %}
+  </div>
+
+  {% if affiliates | length %}
+    <div class="members">
+      {% for person in affiliates %}
+        {% include "partials/member-card.njk" %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="section__note">{{ membershipPage.affiliatesEmpty }}</p>
+  {% endif %}
+</section>

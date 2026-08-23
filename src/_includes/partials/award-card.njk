@@ -8,16 +8,17 @@
   so it is visible at a glance what the board still owes applicants.
 #}
 {% set statusLabel = {
-  open: "Open",
-  upcoming: "Coming soon",
-  closed: "Closed"
+  open: fundingPage.awardLabels.statusOpen,
+  upcoming: fundingPage.awardLabels.statusUpcoming,
+  closed: fundingPage.awardLabels.statusClosed
 } %}
+{% set pending = fundingPage.awardLabels.pending %}
 
 <article class="award award--{{ award.data.status or 'upcoming' }}">
   <div class="award__head">
     <h3>{{ award.data.title }}</h3>
     <span class="badge badge--{{ award.data.status or 'upcoming' }}">
-      {{ statusLabel[award.data.status] or "Coming soon" }}
+      {{ statusLabel[award.data.status] or fundingPage.awardLabels.statusUpcoming }}
     </span>
   </div>
 
@@ -32,51 +33,51 @@
       </caption>
       <tbody>
         <tr>
-          <th scope="row">Eligibility</th>
+          <th scope="row">{{ fundingPage.awardLabels.eligibility }}</th>
           {% if award.data.eligibility %}
             <td>{{ award.data.eligibility }}</td>
           {% else %}
-            <td class="pending">To be published before applications open</td>
+            <td class="pending">{{ pending }}</td>
           {% endif %}
         </tr>
         <tr>
-          <th scope="row">Quantity available</th>
+          <th scope="row">{{ fundingPage.awardLabels.quantity }}</th>
           {% if award.data.quantity %}
             <td>{{ award.data.quantity }}</td>
           {% else %}
-            <td class="pending">To be published before applications open</td>
+            <td class="pending">{{ pending }}</td>
           {% endif %}
         </tr>
         <tr>
-          <th scope="row">How to apply</th>
+          <th scope="row">{{ fundingPage.awardLabels.applicationMethod }}</th>
           {% if award.data.applicationMethod %}
             <td>{{ award.data.applicationMethod }}</td>
           {% else %}
-            <td class="pending">To be published before applications open</td>
+            <td class="pending">{{ pending }}</td>
           {% endif %}
         </tr>
         <tr>
-          <th scope="row">Deadline</th>
+          <th scope="row">{{ fundingPage.awardLabels.deadline }}</th>
           {% if award.data.deadline %}
             <td>{{ award.data.deadline }}</td>
           {% else %}
-            <td class="pending">To be published before applications open</td>
+            <td class="pending">{{ pending }}</td>
           {% endif %}
         </tr>
         <tr>
-          <th scope="row">Decision timeline</th>
+          <th scope="row">{{ fundingPage.awardLabels.decisionTimeline }}</th>
           {% if award.data.decisionTimeline %}
             <td>{{ award.data.decisionTimeline }}</td>
           {% else %}
-            <td class="pending">To be published before applications open</td>
+            <td class="pending">{{ pending }}</td>
           {% endif %}
         </tr>
         <tr>
-          <th scope="row">Selection criteria</th>
+          <th scope="row">{{ fundingPage.awardLabels.selectionCriteria }}</th>
           {% if award.data.selectionCriteria %}
             <td>{{ award.data.selectionCriteria }}</td>
           {% else %}
-            <td class="pending">To be published before applications open</td>
+            <td class="pending">{{ pending }}</td>
           {% endif %}
         </tr>
       </tbody>
@@ -85,7 +86,7 @@
 
   {% if award.data.status == "open" and award.data.applyUrl %}
     <p style="margin-top: 1.25rem; margin-bottom: 0;">
-      <a class="btn btn--primary" href="{{ award.data.applyUrl }}">Apply now</a>
+      <a class="btn btn--primary" href="{{ award.data.applyUrl }}">{{ fundingPage.awardLabels.applyButton }}</a>
     </p>
   {% endif %}
 </article>

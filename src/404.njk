@@ -1,20 +1,36 @@
 ---
 layout: base.njk
 permalink: /404.html
-title: Page not found
 noindex: true
-pageDescription: That page does not exist.
+eleventyComputed:
+  title: "{{ notFound.title }}"
+  pageDescription: "{{ notFound.body }}"
 ---
+{#
+  Every word here is in the CMS, the same as any other page — a 404 is the one
+  page a visitor reads when something has already gone wrong, so it should not
+  be the one page officers cannot fix.
+#}
 
 <div class="page-head">
-  <span class="eyebrow">Error 404</span>
-  <h1>That page does not exist</h1>
-  <p class="page-head__sub">
-    The link may be out of date, or the page may have moved.
-  </p>
+  {% if notFound.eyebrow %}
+    <span class="eyebrow">{{ notFound.eyebrow }}</span>
+  {% endif %}
+  <h1>{{ notFound.title }}</h1>
+  {% if notFound.body %}
+    <p class="page-head__sub">{{ notFound.body }}</p>
+  {% endif %}
 </div>
 
 <div class="btn-row">
-  <a class="btn btn--primary" href="/">Go to the home page</a>
-  <a class="btn btn--ghost" href="/membership/">Join GSSA</a>
+  {% if notFound.primaryLabel %}
+    <a class="btn btn--primary" href="{{ notFound.primaryUrl or '/' }}">
+      {{ notFound.primaryLabel }}
+    </a>
+  {% endif %}
+  {% if notFound.secondaryLabel %}
+    <a class="btn btn--ghost" href="{{ notFound.secondaryUrl or '/' }}">
+      {{ notFound.secondaryLabel }}
+    </a>
+  {% endif %}
 </div>

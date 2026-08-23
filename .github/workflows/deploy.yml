@@ -5,6 +5,11 @@ on:
     branches: [main]
   # Lets an officer re-run a build from the Actions tab without editing anything.
   workflow_dispatch:
+  # An event moves from "Coming up" to "Recent events" when the site is built,
+  # not when the clock passes its date. A nightly build closes that gap without
+  # anyone having to save something in the CMS to trigger it.
+  schedule:
+    - cron: "17 7 * * *"
 
 permissions:
   contents: read

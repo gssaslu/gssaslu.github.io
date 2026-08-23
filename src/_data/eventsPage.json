@@ -1,0 +1,13 @@
+{
+  "title": "Events",
+  "intro": "Meetings, socials, workshops and outreach — what GSSA has been doing, in photos.",
+  "upcomingHeading": "Coming up",
+  "upcomingEmpty": "Nothing on the calendar right now. Watch the announcements.",
+  "pastHeading": "Recent events",
+  "pastNote": "Every GSSA event, newest first.",
+  "pastEmpty": "No events have been written up yet.",
+  "photosHeading": "Photos",
+  "photoWordSingular": "photo",
+  "photoWordPlural": "photos",
+  "backLabel": "← All events"
+}

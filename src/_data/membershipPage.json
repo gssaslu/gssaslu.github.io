@@ -1,0 +1,43 @@
+{
+  "title": "Membership",
+  "intro": "Membership in GSSA is free. There are no dues, no application fee and no minimum commitment — read who is eligible, what each category means, and how to stay in good standing, then sign up with the form below.",
+  "heroImage": "/media/be_a_biliken.png",
+  "heroImageAlt": "The Saint Louis University Billiken mascot pointing, above the words “Be a member”",
+  "tiersHeading": "Membership categories",
+  "tiersNote": "GSSA has two categories of membership. Both are open, both are free; only Active Members vote.",
+  "tiers": [
+    {
+      "name": "Active Member",
+      "text": "Any student currently enrolled at Saint Louis University — undergraduate or graduate, any major, any campus. Active Members may vote in GSSA elections, nominate candidates, run for office and apply for GSSA funding opportunities."
+    },
+    {
+      "name": "Affiliate Member",
+      "text": "Faculty, staff, alumni and geospatial practitioners from outside SLU. Affiliate Members are welcome at meetings and events and may serve on committees, but they do not vote, hold elected office or count toward quorum."
+    }
+  ],
+  "tiersReference": "Membership categories and voting rights are defined in the GSSA Constitution and Bylaws.",
+  "eligibilityHeading": "Eligibility",
+  "eligibility": [
+    "Enrollment at Saint Louis University in any degree program qualifies you as an Active Member. No geospatial coursework or prior experience is required.",
+    "Membership is open to every student regardless of college, department, year or background. GSSA does not restrict membership on any basis prohibited by University policy.",
+    "Anyone outside SLU with a professional or academic interest in geospatial science may join as an Affiliate Member.",
+    "Membership is free. GSSA charges no dues and no member is ever required to pay to participate."
+  ],
+  "standingHeading": "Staying in good standing",
+  "standingNote": "Good standing is what makes you eligible to vote, run for office and apply for GSSA funding. It is easy to keep.",
+  "standing": [
+    "Attend at least one GSSA meeting or event during the semester.",
+    "Remain enrolled at Saint Louis University for the term in question.",
+    "Follow the GSSA Code of Conduct and University policy at GSSA activities.",
+    "Keep your contact details current with the Secretary so meeting notices reach you."
+  ],
+  "standingReference": "Members who lapse are always welcome back — attend one meeting or event and your standing is restored for that semester.",
+  "formButtonLabel": "Membership Form",
+  "studentsHeading": "Student Members",
+  "studentsNote": "Active Members who have agreed to be listed publicly. The full membership roster is private.",
+  "studentsEmpty": "No student members are listed yet.",
+  "affiliatesHeading": "Affiliate Members",
+  "affiliatesNote": "Faculty, staff, alumni and practitioners supporting GSSA.",
+  "affiliatesEmpty": "No affiliate members are listed yet.",
+  "bylawsLinkLabel": "Read the Constitution and Bylaws"
+}

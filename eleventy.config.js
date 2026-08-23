@@ -38,9 +38,57 @@ export default function (eleventyConfig) {
       );
   });
 
+  // Members shown publicly on the Membership page. This is NOT the roster —
+  // only people who agreed to be listed have a file here.
+  eleventyConfig.addCollection("members", (api) =>
+    api
+      .getFilteredByTag("members")
+      .sort(
+        (a, b) =>
+          (a.data.order ?? 99) - (b.data.order ?? 99) ||
+          String(a.data.name).localeCompare(String(b.data.name))
+      )
+  );
+
   eleventyConfig.addCollection("recipients", (api) =>
     api.getFilteredByTag("recipients").sort((a, b) => b.date - a.date)
   );
+
+  // Events split themselves on their own date, so nobody has to remember to
+  // tick "this one is over now". Both halves are computed against midnight UTC
+  // at BUILD time — an event stops being upcoming at the next deploy, not at
+  // the moment the clock rolls over. The nightly cron in the Pages workflow is
+  // what keeps that gap down to a day.
+  const midnightUTC = () => {
+    const now = new Date();
+    return Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate()
+    );
+  };
+
+  eleventyConfig.addCollection("events", (api) =>
+    api.getFilteredByTag("events").sort((a, b) => b.date - a.date)
+  );
+
+  // Soonest first: the next thing you can actually turn up to leads the page.
+  eleventyConfig.addCollection("eventsUpcoming", (api) => {
+    const today = midnightUTC();
+    return api
+      .getFilteredByTag("events")
+      .filter((item) => item.date.getTime() >= today)
+      .sort((a, b) => a.date - b.date);
+  });
+
+  // Newest first: the archive reads like a feed.
+  eleventyConfig.addCollection("eventsPast", (api) => {
+    const today = midnightUTC();
+    return api
+      .getFilteredByTag("events")
+      .filter((item) => item.date.getTime() < today)
+      .sort((a, b) => b.date - a.date);
+  });
 
   // Every distinct board term, newest first — drives the "Past Boards" section.
   eleventyConfig.addCollection("boardTerms", (api) => {
@@ -86,6 +134,16 @@ export default function (eleventyConfig) {
   // and links to the full archive for the rest.
   eleventyConfig.addFilter("limit", (array, n) => (array || []).slice(0, n));
 
+  // Is the page we are rendering one of this nav group's children? Drives
+  // whether the group starts open, so landing on /events/ never shows a
+  // collapsed group with the current page hidden inside it.
+  eleventyConfig.addFilter("holdsCurrent", (children, url) =>
+    (children || []).some(
+      (child) =>
+        child.url === url || (child.url !== "/" && String(url).startsWith(child.url))
+    )
+  );
+
   // Drop a plain value from an array of plain values (used to strip the
   // current term out of the list of all board terms).
   eleventyConfig.addFilter("without", (array, value) =>
@@ -124,9 +182,10 @@ export default function (eleventyConfig) {
   });
 
   // ---- Shortcodes ----------------------------------------------------------
-  // The membership QR code is generated at BUILD TIME from the same
-  // `membershipFormUrl` field that drives the embed, so a printed QR code can
-  // never point somewhere the site does not.
+  // Renders any URL as an SVG QR code at build time. Currently unused — the
+  // Membership page links to the form with a plain button — but kept for
+  // printed flyers, where a code built from `membershipFormUrl` cannot point
+  // somewhere the site does not.
   eleventyConfig.addAsyncShortcode("qrcode", async (url) => {
     if (!url) return "";
     return QRCode.toString(url, {

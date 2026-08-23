@@ -11,24 +11,37 @@
   "externalNote": "GSSA members are graduate and undergraduate students at SLU, so these university-wide sources are open to you as well.",
   "external": [
     {
-      "title": "GSA Professional Development Award",
-      "url": "https://www.slu.edu/graduate-student-association/what-are-you-looking-for-today/funding-awards/professional-development-awards",
-      "description": "Up to $550 per graduate student per fiscal year toward conference registration, travel, lodging and other professional development. Apply within 30 days after the event."
+      "title": "GSA Professional Development Awards",
+      "url": "https://www.slu.edu/life-at-slu/graduate-student-association/funding-awards.php",
+      "description": "Up to $150 toward attending a conference, or up to $550 toward presenting at one, capped at $550 per student per academic year. Open to most graduate programs."
     },
     {
-      "title": "GSA Graduate Initiative Fund",
-      "url": "https://www.slu.edu/graduate-student-association/what-are-you-looking-for-today/funding-awards/graduate-initiative-fund",
-      "description": "Funding for graduate student initiatives and events."
+      "title": "GSA Publication Assistance Awards",
+      "url": "https://www.slu.edu/life-at-slu/graduate-student-association/funding-awards.php",
+      "description": "Covers 50% of eligible publication costs, up to $500. Apply within 30 days after the expense is paid."
     },
     {
-      "title": "GSA Publication Awards",
-      "url": "https://www.slu.edu/graduate-student-association/what-are-you-looking-for-today/funding-awards/publicationawards",
-      "description": "Recognition and funding for published graduate research."
+      "title": "Brennan Summer Fellowship Awards",
+      "url": "https://www.slu.edu/life-at-slu/graduate-student-association/funding-awards.php",
+      "description": "Up to $500 for exam preparation, or up to $1,000 toward a master's thesis or doctoral dissertation. A limited number are awarded each year."
     },
     {
       "title": "Graduate Research Symposium",
-      "url": "https://www.slu.edu/graduate-student-association/what-are-you-looking-for-today/symposium",
-      "description": "SLU's annual research showcase with oral and poster prizes across four disciplinary tracks. Geospatial research fits the Physical and Social Sciences categories."
+      "url": "https://www.slu.edu/life-at-slu/graduate-student-association/index.php",
+      "description": "SLU's annual interdisciplinary showcase each spring, with paper and poster categories judged by faculty and prizes for the top three in each. Geospatial research fits the sciences tracks."
     }
-  ]
+  ],
+  "awardLabels": {
+    "eligibility": "Eligibility",
+    "quantity": "Quantity available",
+    "applicationMethod": "How to apply",
+    "deadline": "Deadline",
+    "decisionTimeline": "Decision timeline",
+    "selectionCriteria": "Selection criteria",
+    "pending": "To be published before applications open",
+    "applyButton": "Apply now",
+    "statusOpen": "Open",
+    "statusUpcoming": "Coming soon",
+    "statusClosed": "Closed"
+  }
 }
