@@ -2969,9 +2969,12 @@ details.person > summary:focus-visible {
   }
 
   .content {
-    /* Deep left inset, so the column reads as its own field rather than as
-       something butted up against the sidebar. */
-    padding: 4rem 3.5rem 5rem 14rem;
+    /* Fluid insets rather than fixed ones. A hard 14rem left margin costs the
+       same 224px on a 13-inch laptop as on a 27-inch monitor, where it is a
+       fifth of the usable width on one and a rounding error on the other.
+       These scale with the window and stop growing once there is enough room:
+       roughly 2rem of inset on a small screen, 7rem on a large one. */
+    padding: 4rem clamp(1.5rem, 3vw, 3.5rem) 5rem clamp(2rem, 5vw, 7rem);
   }
 
   .site-footer {
