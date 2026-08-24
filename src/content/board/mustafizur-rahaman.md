@@ -10,6 +10,7 @@ bio: |
 email: ""
 photo: "/media/mustafizur-rahaman.jpg"
 officeHours: By appointment
+linkedin: ""
 order: 2
 isAdvisor: false
 ---

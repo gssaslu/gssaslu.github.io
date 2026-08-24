@@ -78,6 +78,24 @@
           {% endif %}
         </p>
       {% endif %}
+
+      {#
+        Shown only once a profile address exists. An icon with no link behind it
+        is worse than no icon: it looks like something to press and isn't.
+      #}
+      {% if person.data.linkedin %}
+        <p class="person__social">
+          <a
+            class="person__social-link"
+            href="{{ person.data.linkedin }}"
+            target="_blank"
+            rel="noopener"
+            aria-label="{{ displayName }} {{ labels.socialLinkedinSuffix }}"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.64h.05c.53-1 1.83-2.06 3.76-2.06 4.02 0 4.76 2.65 4.76 6.09V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.07 1.4-2.07 2.85V21H9z"/></svg>
+          </a>
+        </p>
+      {% endif %}
     </div>
   </details>
 {% else %}

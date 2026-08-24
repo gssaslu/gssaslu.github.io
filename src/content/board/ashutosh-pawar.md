@@ -11,6 +11,7 @@ bio: |
 email: ""
 photo: "/media/ashutosh-pawar.jpg"
 officeHours: By appointment
+linkedin: ""
 order: 1
 isAdvisor: false
 ---

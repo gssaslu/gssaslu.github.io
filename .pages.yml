@@ -275,6 +275,12 @@ content:
         label: Office hours
         type: string
         default: By appointment
+      - name: linkedin
+        label: LinkedIn profile
+        type: string
+        description: >-
+          Optional. Paste the full profile address and a LinkedIn icon appears
+          in this officer's bio. Leave blank and no icon is shown.
       - name: order
         label: Display order
         type: number
@@ -1032,6 +1038,12 @@ content:
       - name: socialLinkedin
         label: "LinkedIn icon: label"
         type: string
+      - name: socialLinkedinSuffix
+        label: "Officer LinkedIn icon: words after the name"
+        type: string
+        description: >-
+          The officer's name is put before it, giving "Ashutosh Pawar on
+          LinkedIn" for screen readers.
       - name: socialGithub
         label: "GitHub icon: label"
         type: string

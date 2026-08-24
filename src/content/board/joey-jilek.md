@@ -10,6 +10,7 @@ bio: |
 email: ""
 photo: ""
 officeHours: By appointment
+linkedin: ""
 order: 3
 isAdvisor: false
 ---

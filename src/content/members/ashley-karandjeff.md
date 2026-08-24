@@ -1,7 +1,7 @@
 ---
 name: Ashley Karandjeff
 title: ""
-link: "https://www.linkedin.com/in/REPLACE-WITH-PROFILE/"
+link: ""
 category: student
 photo: ""
 order: 50

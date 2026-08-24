@@ -14,6 +14,7 @@ bio: |
 email: ""
 photo: ""
 officeHours: ""
+linkedin: ""
 order: 5
 isAdvisor: true
 ---

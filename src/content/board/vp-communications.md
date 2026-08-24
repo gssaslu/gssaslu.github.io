@@ -7,6 +7,7 @@ bio: |-
   media, newsletter and website, and coordinates outreach to students, academic
   units and the St. Louis geospatial community.
 officeHours: By appointment
+linkedin: ""
 order: 4
 isAdvisor: false
 ---
