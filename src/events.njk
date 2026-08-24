@@ -12,34 +12,44 @@ pageDescription: >-
   <p class="page-head__sub">{{ eventsPage.intro }}</p>
 </div>
 
-{% if collections.eventsUpcoming | length %}
-  <section class="section">
-    <div class="section__head"><h2>{{ eventsPage.upcomingHeading }}</h2></div>
+{#
+  "Coming up" is always shown, empty or not — a visitor's first question is
+  whether anything is scheduled, and a page that answers by showing nothing
+  leaves them guessing.
+
+  "Recent events" is the opposite: before the first write-up exists there is no
+  archive to speak of, so the heading is held back rather than announcing an
+  empty shelf.
+#}
+<section class="section">
+  <div class="section__head"><h2>{{ eventsPage.upcomingHeading }}</h2></div>
+
+  {% if collections.eventsUpcoming | length %}
     <ul class="event-rows">
       {% for event in collections.eventsUpcoming %}
         {% set upcoming = true %}
         {% include "partials/event-card.njk" %}
       {% endfor %}
     </ul>
-  </section>
-{% endif %}
+  {% else %}
+    <p class="section__note">{{ eventsPage.upcomingEmpty }}</p>
+  {% endif %}
+</section>
 
-<section class="section">
-  <div class="section__head">
-    <h2>{{ eventsPage.pastHeading }}</h2>
-    {% if eventsPage.pastNote %}
-      <p class="section__note">{{ eventsPage.pastNote }}</p>
-    {% endif %}
-  </div>
+{% if collections.eventsPast | length %}
+  <section class="section">
+    <div class="section__head">
+      <h2>{{ eventsPage.pastHeading }}</h2>
+      {% if eventsPage.pastNote %}
+        <p class="section__note">{{ eventsPage.pastNote }}</p>
+      {% endif %}
+    </div>
 
-  {% if collections.eventsPast | length %}
     <div class="event-grid">
       {% for event in collections.eventsPast %}
         {% set upcoming = false %}
         {% include "partials/event-card.njk" %}
       {% endfor %}
     </div>
-  {% else %}
-    <p class="section__note">{{ eventsPage.pastEmpty }}</p>
-  {% endif %}
-</section>
+  </section>
+{% endif %}
