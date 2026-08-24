@@ -873,7 +873,9 @@ content:
         label: "Categories: list"
         type: object
         list: true
-        description: One card per membership category.
+        description: >-
+          One card per membership category. The bylaws define three: Student
+          Member, Active Member and Affiliate Member.
         fields:
           - name: name
             label: Category name
@@ -900,18 +902,20 @@ content:
         list: true
 
       - name: standingHeading
-        label: "Good standing: heading"
+        label: "Active Member status: heading"
         type: string
       - name: standingNote
-        label: "Good standing: note under the heading"
+        label: "Active Member status: note under the heading"
         type: text
       - name: standing
-        label: "Good standing: list"
+        label: "Active Member status: list"
         type: string
         list: true
-        description: What a member must do to keep the right to vote and apply.
+        description: >-
+          The steps that make someone an Active Member — completing the form,
+          then attending one meeting or event in the semester.
       - name: standingReference
-        label: "Good standing: small print"
+        label: "Active Member status: small print"
         type: string
 
       - name: formButtonLabel
