@@ -57,6 +57,9 @@ content:
         label: Photo (optional)
         type: image
         description: Shown under the text. Landscape photos look best.
+          A photo straight from a phone is usually too large and the upload
+          fails with a 413 error — resize it to about 1000 pixels wide
+          first.
       - name: imageAlt
         label: Photo description (optional)
         type: string
@@ -85,6 +88,10 @@ content:
         fields:
           - name: file
             label: File
+            description: >-
+              A photo straight from a phone is usually too large and the
+              upload fails with a 413 error — resize it to about 1000 pixels
+              wide first.
             type: file
             options:
               categories: [document, image]
@@ -168,6 +175,9 @@ content:
         description: >-
           The one photo that represents the event. Shown at the top of the page
           and on the card in the events list. Landscape works best.
+          A photo straight from a phone is usually too large and the upload
+          fails with a 413 error — resize it to about 1000 pixels wide
+          first.
       - name: coverAlt
         label: Cover photo description
         type: string
@@ -182,6 +192,10 @@ content:
         fields:
           - name: image
             label: Photo
+            description: >-
+              A photo straight from a phone is usually too large and the
+              upload fails with a 413 error — resize it to about 1000 pixels
+              wide first.
             type: image
           - name: caption
             label: Caption
@@ -265,6 +279,9 @@ content:
           Optional. Any shape works — the photo is centre-cropped into a circle
           automatically, so there is no need to crop it first. Until one is
           added, a neutral "no photo" circle is shown instead.
+          A photo straight from a phone is usually too large and the upload
+          fails with a 413 error — resize it to about 1000 pixels wide
+          first.
       - name: email
         label: Email
         type: string
@@ -393,6 +410,9 @@ content:
         type: image
         description: >-
           Optional. Centre-cropped into a circle automatically.
+          A photo straight from a phone is usually too large and the upload
+          fails with a 413 error — resize it to about 1000 pixels wide
+          first.
       - name: note
         label: Short note
         type: text
@@ -462,6 +482,9 @@ content:
         description: >-
           Optional. Any shape works — the photo is centre-cropped into a circle
           automatically. Without one, a neutral "no photo" circle is shown.
+          A photo straight from a phone is usually too large and the upload
+          fails with a 413 error — resize it to about 1000 pixels wide
+          first.
       - name: order
         label: Display order
         type: number
@@ -558,6 +581,9 @@ content:
         description: >-
           A wide campus photo across the top of the page. Landscape shots work
           best. Leave empty and a grey "Campus photo" placeholder is shown.
+          A photo straight from a phone is usually too large and the upload
+          fails with a 413 error — resize it to about 1000 pixels wide
+          first.
       - name: heroImageAlt
         label: "Top banner: photo description"
         type: string
@@ -587,6 +613,9 @@ content:
         description: >-
           Upload the bylaws as a PDF and it appears in a reader on the page.
           Leave empty and a placeholder box is shown instead.
+          A photo straight from a phone is usually too large and the upload
+          fails with a 413 error — resize it to about 1000 pixels wide
+          first.
       - name: heroEmptyLabel
         label: "Banner: text shown before a photo is uploaded"
         type: string
@@ -646,6 +675,9 @@ content:
             description: >-
               A PNG or SVG with a transparent background looks best. Wide
               logos work better than tall ones.
+              A photo straight from a phone is usually too large and the
+              upload fails with a 413 error — resize it to about 1000 pixels
+              wide first.
           - name: url
             label: Website (optional)
             type: string
@@ -865,6 +897,9 @@ content:
           Optional. Sits to the right of the page title on a wide screen and
           drops below it on a phone. A cut-out with a transparent background
           (a PNG) sits on the page better than a photo with its own backdrop.
+          A photo straight from a phone is usually too large and the upload
+          fails with a 413 error — resize it to about 1000 pixels wide
+          first.
       - name: heroImageAlt
         label: Picture description
         type: string
