@@ -984,10 +984,13 @@ hr {
      every card. auto-fill, not auto-fit: the advisor grid holds one card and
      auto-fit would stretch it across the whole row. */
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 18rem));
-  /* Stretch, not start: names and programs wrap to different depths, so the
-     cards are made equal height and the "read bio" links pinned to a shared
-     baseline. Ragged link heights read as sloppy. */
-  align-items: stretch;
+  /* Start, not stretch: equal-height cards pin every "read bio" to a shared
+     baseline, which sounds tidy but pays for it with a hole under the shortest
+     card — the officer with no program line ends up with an inch of white
+     space. Reserving two lines for the role (above) evens out most of the
+     difference; letting each card end where its content ends removes the
+     rest. */
+  align-items: start;
   justify-content: start;
 }
 
@@ -1087,6 +1090,11 @@ details.person > summary:focus-visible {
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--blue);
+  line-height: 1.35;
+  /* Two lines' worth, always. "Vice President of Communications" wraps and
+     "Vice President of Finance" does not, so without this the two cards start
+     their next line at different heights and nothing below them lines up. */
+  min-height: calc(2 * 1.35em);
 }
 
 .person__role--advisor {
@@ -2878,7 +2886,10 @@ details.person > summary:focus-visible {
 .marquee__track {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 32s linear infinite;
+  /* Slowed from 32s. The slots were widened to 14rem, so the track got longer
+     while the duration did not — same seconds over more distance reads as a
+     speed-up. */
+  animation: marquee-scroll 55s linear infinite;
 }
 
 /* Two identical groups sit side by side; shifting the track by exactly half
