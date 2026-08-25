@@ -1838,6 +1838,10 @@ details.person > summary:focus-visible {
   margin: 0;
   padding: 0;
   border-top: 1px solid var(--line);
+  /* Bounded like the cards. A row left to run the full width of a large
+     monitor strands the headline at one end and the arrow at the other, with
+     nothing between them. */
+  max-width: 58rem;
 }
 
 .news-list__item {
@@ -1983,6 +1987,7 @@ details.person > summary:focus-visible {
   list-style: none;
   margin: 0;
   padding: 0;
+  max-width: 58rem;
 }
 
 .event-row {
@@ -2886,10 +2891,10 @@ details.person > summary:focus-visible {
 .marquee__track {
   display: flex;
   width: max-content;
-  /* Slowed from 32s. The slots were widened to 14rem, so the track got longer
-     while the duration did not — same seconds over more distance reads as a
-     speed-up. */
-  animation: marquee-scroll 55s linear infinite;
+  /* Duration tracks slot width: every time the slots grow the track gets
+     longer, and the same seconds over more distance reads as a speed-up.
+     11rem/32s -> 14rem/55s -> 17rem/67s. */
+  animation: marquee-scroll 67s linear infinite;
 }
 
 /* Two identical groups sit side by side; shifting the track by exactly half
@@ -2929,8 +2934,8 @@ details.person > summary:focus-visible {
   /* The slot, not the image, sets the size — logos are contained inside it, so
      a wide wordmark and a square crest still occupy the same footprint and the
      strip keeps an even rhythm. Grow the slot to grow every logo at once. */
-  width: 14rem;
-  height: 7rem;
+  width: 17rem;
+  height: 8.5rem;
 }
 
 .marquee__item a {
