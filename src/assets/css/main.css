@@ -25,7 +25,7 @@
   --bg-alt: #f6f8fb;
 
   /* Sidebar */
-  --sidebar-w: 22rem;
+  --sidebar-w: 24rem;
   --sidebar-fg: #eaf0fa;
   --sidebar-fg-dim: #9db0cf;
 
@@ -270,10 +270,10 @@ hr {
    navy rail. */
 .sidebar__logo {
   width: 100%;
-  /* The sidebar is 22rem with 1.4rem of padding either side, so 19.2rem is all
+  /* The sidebar is 24rem with 1.4rem of padding either side, so 21.2rem is all
      there is. Holding the mark at ~87% of that keeps it looking placed rather
      than banded across the panel — grow this whenever --sidebar-w grows. */
-  max-width: 16.5rem;
+  max-width: 18.5rem;
   height: auto;
   background: #fff;
   border-radius: var(--radius);
