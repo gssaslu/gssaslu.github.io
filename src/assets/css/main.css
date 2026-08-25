@@ -413,10 +413,13 @@ hr {
   margin: 0 0 0.45rem;
 }
 
+/* Sits in the header now, under the organisation and institution lines, so it
+   is visible without scrolling and survives the mobile layout — the bottom meta
+   panel it used to live in is hidden on small screens. */
 .sidebar__social {
   display: flex;
   gap: 0.6rem;
-  margin-top: 0.75rem;
+  margin-top: 0.9rem;
 }
 
 .sidebar__social a {
