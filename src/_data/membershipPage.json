@@ -1,6 +1,6 @@
 {
   "title": "Membership",
-  "intro": "Membership in GSSA is free. There are no dues, no application fee and no minimum commitment — read who is eligible, what each category means, and how Active Member status works, then sign up with the form below.",
+  "intro": "Membership in GSSA is free. There are no dues, no application fee, and no minimum commitment. Read who is eligible, what each category means, and how Active Member status works, then sign up with the form below.",
   "heroImage": "/media/be_a_biliken.png",
   "heroImageAlt": "The Saint Louis University Billiken mascot pointing, above the words “Be a member”",
   "tiersHeading": "Membership categories",
@@ -20,6 +20,7 @@
     }
   ],
   "tiersReference": "Membership categories and voting rights are defined in the GSSA Constitution and Bylaws.",
+  "bylawsLinkLabel": "Read the Constitution and Bylaws",
   "eligibilityHeading": "Eligibility",
   "eligibility": [
     "Enrollment at Saint Louis University in any degree program, plus a completed membership form, makes you a Student Member. No geospatial coursework or prior experience is required.",
@@ -44,6 +45,5 @@
   "studentsEmpty": "No student members are listed yet.",
   "affiliatesHeading": "Affiliate Members",
   "affiliatesNote": "Faculty, staff, alumni and practitioners supporting GSSA.",
-  "affiliatesEmpty": "No affiliate members are listed yet.",
-  "bylawsLinkLabel": "Read the Constitution and Bylaws"
+  "affiliatesEmpty": "No affiliate members are listed yet."
 }
