@@ -12,7 +12,7 @@ bio: |
   provides guidance and institutional continuity; he is non-voting and does not
   control GSSA elections or student decisions.
 email: ""
-photo: ""
+photo: "/media/vasit-sagan.jpg"
 officeHours: ""
 linkedin: ""
 order: 5
