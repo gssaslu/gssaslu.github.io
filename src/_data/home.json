@@ -26,6 +26,11 @@
       "name": "Saint Louis University",
       "image": "/media/saint-louis-university.png",
       "url": "https://www.slu.edu"
+    },
+    {
+      "name": "EEGS",
+      "image": "/media/SLU_LL_EEGS_rgb-03.jpg",
+      "url": "https://www.slu.edu/science-and-engineering/academics/earth-environmental-geospatial-science/index.php"
     }
   ],
   "ctaHeading": "Join GSSA",
