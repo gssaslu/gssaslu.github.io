@@ -12,6 +12,7 @@
   "awardLabels": {
     "eligibility": "Eligibility",
     "quantity": "Quantity available",
+    "applicationMethod": "How to apply",
     "deadline": "Deadline",
     "decisionTimeline": "Decision timeline",
     "selectionCriteria": "Selection criteria",
