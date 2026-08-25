@@ -36,8 +36,15 @@
   {% endif %}
 
   <span class="person__name">{{ displayName }}</span>
+  {#
+    Both vice-president titles break after "of", so the two cards wrap the same
+    way instead of one running to a second line and the other not. The space
+    before the <br> is deliberate: the bio drawer reads this element's
+    textContent, and without it the title would come out as "of Finance" run
+    together.
+  #}
   <span class="person__role{% if person.data.isAdvisor %} person__role--advisor{% endif %}">
-    {{ person.data.role }}
+    {{ person.data.role | replace("Vice President of ", "Vice President of <br>") | safe }}
   </span>
   {% if person.data.program %}
     <span class="person__program">{{ person.data.program }}</span>
