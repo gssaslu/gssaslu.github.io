@@ -13,6 +13,7 @@ bio: The Vice President of Finance prepares GSSA's budget, maintains financial
 photo: /media/joey-website-pic-2.jpg
 email: joey.jilek@slu.edu
 officeHours: By appointment
+linkedin: https://www.linkedin.com/in/joseph-j-4098b2126/
 order: 3
 isAdvisor: false
 ---
