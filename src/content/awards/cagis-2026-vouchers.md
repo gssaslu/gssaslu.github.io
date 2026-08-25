@@ -1,6 +1,6 @@
 ---
 title: CaGIS 2026 Student Vouchers
-status: upcoming
+status: open
 eligibility: Active GSSA student member.
 quantity: 6 (2 free registrations and 6 memberships)
 applicationMethod: Google Form
