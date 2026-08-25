@@ -9,28 +9,6 @@
   "recipientsNote": "Students who have received GSSA-administered opportunities.",
   "externalHeading": "Other funding you are eligible for",
   "externalNote": "GSSA members are graduate and undergraduate students at SLU, so these university-wide sources are open to you as well.",
-  "external": [
-    {
-      "title": "GSA Professional Development Awards",
-      "url": "https://www.slu.edu/life-at-slu/graduate-student-association/funding-awards.php",
-      "description": "Up to $150 toward attending a conference, or up to $550 toward presenting at one, capped at $550 per student per academic year. Open to most graduate programs."
-    },
-    {
-      "title": "GSA Publication Assistance Awards",
-      "url": "https://www.slu.edu/life-at-slu/graduate-student-association/funding-awards.php",
-      "description": "Covers 50% of eligible publication costs, up to $500. Apply within 30 days after the expense is paid."
-    },
-    {
-      "title": "Brennan Summer Fellowship Awards",
-      "url": "https://www.slu.edu/life-at-slu/graduate-student-association/funding-awards.php",
-      "description": "Up to $500 for exam preparation, or up to $1,000 toward a master's thesis or doctoral dissertation. A limited number are awarded each year."
-    },
-    {
-      "title": "Graduate Research Symposium",
-      "url": "https://www.slu.edu/life-at-slu/graduate-student-association/index.php",
-      "description": "SLU's annual interdisciplinary showcase each spring, with paper and poster categories judged by faculty and prizes for the top three in each. Geospatial research fits the sciences tracks."
-    }
-  ],
   "awardLabels": {
     "eligibility": "Eligibility",
     "quantity": "Quantity available",
@@ -43,5 +21,13 @@
     "statusOpen": "Open",
     "statusUpcoming": "Coming soon",
     "statusClosed": "Closed"
-  }
+  },
+  "external": [
+    {
+      "title": "GSSA Professional Development Awards"
+    },
+    {
+      "title": "GSSA Publication Assistance Awards"
+    }
+  ]
 }
