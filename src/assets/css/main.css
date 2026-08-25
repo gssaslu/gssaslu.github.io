@@ -1097,8 +1097,12 @@ details.person > summary:focus-visible {
   min-height: calc(2 * 1.35em);
 }
 
+/* The advisor has a grid to itself, so there is no neighbouring card to line
+   up with — the two-line minimum above would only add empty space under
+   "Faculty Advisor". */
 .person__role--advisor {
   color: var(--gold-text);
+  min-height: 0;
 }
 
 .person__program {
