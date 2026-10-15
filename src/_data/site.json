@@ -7,7 +7,6 @@
   "currentTerm": "2026-2027",
   "foundedYear": "2026",
   "membershipFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfAZduKOsF4eWrnObsYbB7IMWQQgzAvzNOhYWQTfYerXpnohw/viewform",
-  "contactEmail": "",
   "center": {
     "name": "Geospatial Center at Saint Louis University",
     "url": "https://www.slu.edu/geospatial",
@@ -15,7 +14,6 @@
   },
   "social": {
     "instagram": "https://www.instagram.com/REPLACE-WITH-HANDLE/",
-    "linkedin": "https://www.linkedin.com/company/REPLACE-WITH-PAGE/",
-    "github": ""
+    "linkedin": "https://www.linkedin.com/company/gssa-slu/home/"
   }
 }
