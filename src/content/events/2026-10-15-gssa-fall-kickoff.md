@@ -7,4 +7,5 @@ summary:  **GSSA Fall Kickoff is this Friday, October 16, from 5:30 to 6:30 P
   in Cook Hall, Anheuser-Busch Auditorium (L50)!** Feel free to **bring a friend
   who’s interested in geospatial science or curious about GSSA**. We’re also
   planning to have pizza and some snacks, so come hungry! 🍕
+cover: /media/GSSA_Event_Flyer_page-0001.jpg
 ---
