@@ -10,6 +10,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addPassthroughCopy({ "src/media": "media" });
   eleventyConfig.addPassthroughCopy({ "src/root": "." });
+  eleventyConfig.ignores.add("src/root/**");
 
   eleventyConfig.setServerOptions({ showAllHosts: true });
 
