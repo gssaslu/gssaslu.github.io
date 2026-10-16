@@ -17,6 +17,17 @@
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
+    {% if page.url == "/" %}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "GSSA SLU",
+        "alternateName": ["GSSA", "Geospatial Science Student Association"],
+        "url": "{{ site.url }}/"
+      }
+    </script>
+    {% endif %}
     <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
     <!-- Space Grotesk for headings, Ubuntu Sans for text. preconnect shaves a round
