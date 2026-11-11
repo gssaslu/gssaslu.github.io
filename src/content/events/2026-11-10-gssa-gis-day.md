@@ -1,6 +1,6 @@
 ---
 title: GSSA GIS Day
-date: 2026-11-10
+date: 2026-11-18
 location: Center for Global Citizenship, Saint Louis University
 kind: Social
 summary: >-
@@ -31,5 +31,4 @@ summary: >-
 
   **We'll share the submission form and more later this week. In the meantime,
   get started on your maps!**
-cover: /media/GIS_DAY_Flyer (1)-1.png
 ---
