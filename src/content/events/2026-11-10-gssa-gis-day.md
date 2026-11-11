@@ -29,7 +29,7 @@ summary: >-
   favorites. **The winning map will receive a prize! 🎁**
 
 
-  **We'll share the submission form and more details in a follow-up email later
-  this week. In the meantime, get started on your maps!**
+  **We'll share the submission form and more later this week. In the meantime,
+  get started on your maps!**
 cover: /media/GIS_DAY_Flyer (1)-1.png
 ---
