@@ -8,7 +8,7 @@ bio: "Khaled is an enthusiastic geoinformatics doctoral student with a strong
   foundation in geospatial analysis, remote sensing, fluvial geomorphology, and
   hydrology. Skilled in GIS & remote sensing tools, machine learning, and
   hydraulic modeling. "
-photo: /media/1778902385047.png
+photo: /media/17789023850471.png
 email: khaledmahamud.khan@slu.edu
 officeHours: By appointment
 linkedin: https://www.linkedin.com/in/iam-srkhan/
