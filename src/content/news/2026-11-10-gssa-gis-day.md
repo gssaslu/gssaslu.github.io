@@ -3,7 +3,7 @@ title: GSSA GIS Day
 date: 2026-11-18
 image: /media/GIS_DAY_Flyer (1).png
 ---
-We're excited to invite you to **GSSA's first GIS Day celebration on Wednesday, November 18,** from 11 AM to 4 PM at SLU's Center for Global Citizenship***!***
+We're excited to invite you to **GSSA's first GIS Day celebration on Wednesday, November 18,** from 11 AM to 4 PM at SLU's Center for Global Citizenship!
 
 We've planned a fun day with GeoGuessr, career conversations with geospatial professionals, creative mapping activities, free pizza, and a *Paint the Cup* activity in collaboration with the Graduate Student Association (GSA)!
 
